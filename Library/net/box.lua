@@ -1,6 +1,6 @@
 ---@meta
 
---luacheck:ignore
+-- luacheck:ignore
 ---@class net.box
 local m = {}
 

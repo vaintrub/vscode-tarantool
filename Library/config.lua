@@ -1,7 +1,5 @@
 ---@meta
 
-require 'box'
-
 ---@class LoadedConfig
 ---@field public box BoxCfg config of box.cfg
 ---@field public etcd EtcdCfg config of etcd connector
