@@ -4,7 +4,7 @@
 
 local datetime = {}
 
----@class DateTime
+---@class datetime: ffi.cdata*
 ---@field nsec number (Default: 0) (usec, msec) Fractional part of the last second. You can specify either nanoseconds (nsec), or microseconds (usec), or milliseconds (msec). Specifying two of these units simultaneously or all three ones lead to an error
 ---@field sec number (Default: 0) Seconds. Value range: 0 - 60
 ---@field min number (Default: 0) Minutes. Value range: 0 - 59
@@ -35,7 +35,7 @@ local datetime_obj = {}
 --- * tzoffset: 0
 --- * tz: nil
 ---@param units? { nsec: number, sec: number, min: number, hour: number, day: number, year: number, timestamp: number, tzoffset: number, tz: string}
----@return DateTime datetime_obj
+---@return datetime datetime_obj
 function datetime.new(units) end
 
 --- Convert the standard presentation of a datetime object into a formatted string
@@ -61,9 +61,9 @@ function datetime_obj:sub() end
 
 datetime.interval = {}
 
----@class Interval
+---@class interval: ffi.cdata*
 ---@field nsec number (Default: 0) (usec, msec)	Fractional part of the last second. You can specify either nanoseconds (nsec), or microseconds (usec), or milliseconds (msec). Specifying two of these units simultaneously or all three ones lead to an error
----@field sec number (Default: 0) Seconds	
+---@field sec number (Default: 0) Seconds
 ---@field min number (Default: 0) Minutes
 ---@field hour number (Default: 0) Hours
 ---@field day number (Default: 0) Day number
@@ -71,8 +71,8 @@ datetime.interval = {}
 ---@field month number (Default: 0) Month number
 ---@field year number (Default: 0) Year
 ---@field adjust string (Default: 'none') Defines how to round days in a month after an arithmetic operation
----@operator add Interval
----@operator sub Interval
+---@operator add(interval): interval
+---@operator sub(interval): interval
 local interval_obj = {}
 
 
@@ -90,7 +90,7 @@ local interval_obj = {}
 --- * year: 0
 --- * adjust: 'none'
 ---@param units? { nsec: number, sec: number, min: number, hour: number, day: number, week: number, month: number, year: number, adjust: string}
----@return Interval interval_obj
+---@return interval interval_obj
 function datetime.interval.new(units) end
 
 
