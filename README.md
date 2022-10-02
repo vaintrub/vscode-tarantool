@@ -19,9 +19,6 @@ For local development you need:
 1. Clone this repository
 2. Add the path to this library in the extension settings
 
-<a href="https://imgbb.com/"><img src="https://i.ibb.co/pf3YKdb/Screenshot-2022-10-02-at-16-59-46.png" alt="Screenshot-2022-10-02-at-16-59-46" border="0"></a><br /><a target='_blank' href='https://ru.imgbb.com/'></a><br />
-
-
 ## ☑️ TODO
 - [ ] Add box module annotations
   - [X] box functions (not all)
