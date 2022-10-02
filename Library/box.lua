@@ -55,27 +55,32 @@ function box.savepoint() end
 --- Do not end the transaction, but cancel all its data-change and box.savepoint() operations that were done after the specified savepoint.
 ---
 --- **Possible errors:**
---- 
+---
 --- * Error if the savepoint does not exist.
 --- @param savepoint table
 --- @return BoxError error
 function box.rollback_to_savepoint(savepoint) end
 
---TODO: Возмодно лучше использовать generic
+--TODO: Возможно лучше использовать generic
 --- Execute a function, acting as if the function starts with an implicit box.begin() and ends with an implicit box.commit() if successful, or ends with an implicit box.rollback() if there is an error.
 ---
 --- **Possible errors:**
 --- * Error and abort the transaction in case of a conflict.
 --- * Error if the operation fails to write to disk.
 --- * Error if for some reason memory cannot be allocated.
----@param tx_function fun(...): any...
----@param func_args table
----@return any result The result of the function passed to atomic() as an argument.
-function box.atomic(tx_function, func_args)
+---@generic T
+---@param tx_function fun(...: any): ...: T
+---@param ... any
+---@return T ... The result of the function passed to atomic() as an argument.
+function box.atomic(tx_function, ...) end
 
+---@param trigger_func fun()
+---@param old_trigger_func fun()
+function box.on_commit(trigger_func, old_trigger_func) end
 
----@param trigger_func any
----@param old_trigger_func any
-function box.on_commit(trigger_func, old_trigger_func)
+---@alias boxIterator boxTableIterator
+
+---@class boxTableIterator
+---@field iterator "GE"|"GT"|"LT"|"LE"|"EQ"|"REQ"
 
 return box

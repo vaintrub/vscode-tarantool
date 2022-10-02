@@ -4,56 +4,63 @@
 
 local decimal = {}
 
----@class Decimal
+---@class decimal
+---@operator unm: decimal
+---@operator add(decimal|number|string): decimal
+---@operator sub(decimal|number|string): decimal
+---@operator mul(decimal|number|string): decimal
+---@operator div(decimal|number|string): decimal
+---@operator mod(decimal|number|string): decimal
+---@operator pow(decimal|number|string): decimal
 local decimal_obj = {}
 
----@param n Decimal|string|number
----@return Decimal
+---@param n decimal|string|number
+---@return decimal
 function decimal.abs(n) end
 
----@param n Decimal|string|number
----@return Decimal
+---@param n decimal|string|number
+---@return decimal
 function decimal.exp(n) end
 
----@param n Decimal|string|number
+---@param n decimal|string|number
 ---@return boolean
 function decimal.is_decimal(n) end
 
----@param n Decimal|string|number
----@return Decimal
+---@param n decimal|string|number
+---@return decimal
 function decimal.ln(n) end
 
----@param n Decimal|string|number
----@return Decimal
+---@param n decimal|string|number
+---@return decimal
 function decimal.new(n) end
 
----@param n Decimal|string|number
+---@param n decimal|string|number
 ---@return number
 function decimal.precision(n) end
 
----@param n Decimal
+---@param n decimal
 ---@param new_scale number
----@return Decimal
+---@return decimal
 function decimal.rescale(n, new_scale) end
 
----@param n Decimal|string|number
+---@param n decimal|string|number
 ---@return number scale
 function decimal.scale(n, new_scale) end
 
----@param n Decimal|string|number
----@return Decimal
+---@param n decimal|string|number
+---@return decimal
 function decimal.log10(n) end
 
----@param n Decimal|string|number
----@return Decimal
+---@param n decimal|string|number
+---@return decimal
 function decimal.round(n) end
 
----@param n Decimal|string|number
----@return Decimal
+---@param n decimal|string|number
+---@return decimal
 function decimal.sqrt(n) end
 
----@param n Decimal
----@return Decimal
+---@param n decimal
+---@return decimal
 function decimal.trim(n) end
 
 return decimal

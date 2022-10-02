@@ -62,10 +62,9 @@ local fiber_object = {}
 function fiber_object:id() end
 
 ---Get a fiber’s name
-function fiber_object:name() end
-
----Set a fiber’s name
-function fiber_object:name(name) end
+---@param name? string
+---@param options {truncate: boolean}
+function fiber_object:name(name, options) end
 
 ---Get a fiber’s status
 function fiber_object:status() end
