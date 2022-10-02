@@ -19,6 +19,8 @@ For local development you need:
 1. Clone this repository
 2. Add the path to this library in the extension settings
 
+![Screenshot 2022-10-02 at 16 59 46](https://user-images.githubusercontent.com/63997548/193460234-7bdd642d-20dd-40ad-bf88-15ed1233865e.png)
+
 ## ☑️ TODO
 - [ ] Add box module annotations
   - [X] box functions (not all)
