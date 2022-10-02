@@ -1,0 +1,61 @@
+<a href="http://tarantool.org">
+	<img src="https://avatars2.githubusercontent.com/u/2344919?v=2&s=250" align="right">
+</a>
+
+# 🕷 Tarantool VScode Library
+> Adds IntelliSense features for Tarantool to VS Code. This is a Library for [Sumneko's Lua Language Server](https://github.com/sumneko/lua-language-server) with extended EmmyLua annotations.
+
+## 🎓 Quick start
+
+In the future, just install the [VSCode extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua) for Lua by Sumneko!
+
+## 💣 Features
+> TODO
+
+
+## 📝 Contributing
+For local development you need:
+
+1. Clone this repository
+2. Add the path to this library in the extension settings
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/pf3YKdb/Screenshot-2022-10-02-at-16-59-46.png" alt="Screenshot-2022-10-02-at-16-59-46" border="0"></a><br /><a target='_blank' href='https://ru.imgbb.com/'></a><br />
+
+
+## ☑️ TODO
+- [ ] Add box module annotations
+  - [X] box functions (not all)
+  - [ ] backup
+  - [ ] ctl
+  - [ ] error
+  - [X] space
+  - [ ] index
+  - [X] cfg
+  - [ ] schema
+  - [ ] stat
+  - [ ] tuple
+- [X] net.bot (not all)
+- [ ] http server, client
+  - [X] annotations (not all)
+  - [ ] doc
+- [ ] Datetime
+  - [X] Add annotations
+  - [ ] Add doc
+- [ ] json, yaml
+- [X] digest (not all)
+- [X] fiber
+- [X] fio (not all)
+- [X] buffer
+- [X] fun (not all)
+- [X] decimal
+- [ ] socket
+- [ ] csv
+- [ ] Add vshard annotations
+- [ ] Add library to sumneko's repository
+
+
+## 🕷 Keywords
+
+- [Tarantool](https://www.tarantool.io/en/)
+- [Sumneko](https://github.com/sumneko/lua-language-server)
+- [VSCode Extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua)
