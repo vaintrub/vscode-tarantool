@@ -5,16 +5,26 @@
 local fio = {}
 
 ---Form a path name from one or more partial strings
-function fio.pathjoin() end
+---@vararg string ...
+---@return string
+function fio.pathjoin(...) end
 
 ---Get a file name
-function fio.basename() end
+---Given a full path name, remove all but the final part (the file name). Also remove the suffix, if it is passed.
+---@param path_name string path name
+---@param suffix? string suffix
+---@return string file_name
+function fio.basename(path_name, suffix) end
 
 ---Get a directory name
-function fio.dirname() end
+---@param path_name string path-name
+---@return string
+function fio.dirname(path_name) end
 
 ---Get a directory and file name
-function fio.abspath() end
+---@param file_name string
+---@return string directory_name that is, path name including file name.
+function fio.abspath(file_name) end
 
 ---Check if file or directory exists
 function fio.path.exists() end
@@ -41,10 +51,15 @@ function fio.lstat() end
 function fio.stat() end
 
 ---Create directory
-function fio.mkdir() end
+---@param path_name string
+---@param mode? number
+---@return boolean success, string error_message? (If no error) true. (If error) two return values: false, error message.
+function fio.mkdir(path_name, mode) end
 
 ---Delete a directory
-function fio.rmdir()	end
+---@param path_name string
+---@return boolean success, string message?
+function fio.rmdir(path_name) end
 
 ---Change working directory
 function fio.chdir() end
@@ -53,9 +68,12 @@ function fio.chdir() end
 function fio.listdir() end
 
 ---Get files whose names match a given string
-function fio.glob() end
+---Return a list of files that match an input string. The list is constructed with a single flag that controls the behavior of the function: GLOB_NOESCAPE. For details type man 3 glob.
+---@return string[] list list of files whose names match the input string
+function fio.glob(path_name) end
 
 ---Get the name of a directory for storing temporary files
+---@return string
 function fio.tempdir() end
 
 ---Get the name of the current working directory
@@ -65,7 +83,9 @@ function fio.cwd() end
 function fio.copytree() end
 
 ------Create directories
-function fio.mktree() end
+---@param path_name string
+---@return boolean success, string? message
+function fio.mktree(path_name) end
 
 ---Delete directories
 function fio.rmtree() end
@@ -77,10 +97,14 @@ function fio.link() end
 function fio.symlink() end
 
 ---Create and delete links
-function fio.readlink() end
+---@param src string path to the link
+---@return string link_source
+function fio.readlink(src) end
 
----Create and delete links
-function fio.unlink() end
+---Create and delete links and files
+---@param path_name string
+---@return boolean success, string message?
+function fio.unlink(path_name) end
 
 ---Rename a file or directory
 function fio.rename() end
@@ -104,7 +128,11 @@ function fio.truncate() end
 function fio.sync() end
 
 ---Open a file
-function fio.open() end
+---@param path_name string
+---@param flags? number|string|string[]
+---@param mode? number
+---@return FileHandle
+function fio.open(path_name, flags, mode) end
 
 
 ---@class FileHandle
@@ -120,10 +148,16 @@ function file_handle:pread() end
 function file_handle:pwrite() end
 
 ---Perform non-random-access read on a file
-function file_handle:read() end
+---@overload fun(buffer: ffi.cdata*, count: number): number
+---@param count? number number of bytes to read
+---@return string buffer
+function file_handle:read(count) end
 
 ---Perform non-random-access write on a file
-function file_handle:write() end
+---@overload fun(buffer: ffi.cdata*, count: number): boolean
+---@param new_string string
+---@return boolean success
+function file_handle:write(new_string) end
 
 ---Change the size of an open file
 function file_handle:truncate() end

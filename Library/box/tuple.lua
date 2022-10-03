@@ -4,6 +4,7 @@
 box.tuple = {}
 
 ---Construct a new tuple from either a scalar or a Lua table. Alternatively, one can get new tuples from Tarantool’s select or insert or replace or update requests, which can be regarded as statements that do new() implicitly.
+---@overload fun(...: tuple_type): box.tuple
 ---@param value tuple_type[]
 ---@return box.tuple tuple
 function box.tuple.new(value) end

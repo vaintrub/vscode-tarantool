@@ -81,6 +81,28 @@ function box.on_commit(trigger_func, old_trigger_func) end
 ---@alias boxIterator boxTableIterator
 
 ---@class boxTableIterator
----@field iterator "GE"|"GT"|"LT"|"LE"|"EQ"|"REQ"
+---@field iterator "GE"|"GT"|"LT"|"LE"|"EQ"|"REQ"|"BITS_ALL_NOT_SET"|"BITS_ALL_SET"|"BITS_ANY_SET"|"OVERLAPS"|"NEIGHBOR"|"ALL"|boxIndexIterator
+
+---@enum boxIndexIterator
+box.index = {
+  EQ = 0,
+  REQ = 1,
+  ALL = 2,
+  LT = 3,
+  LE = 4,
+  GE = 5,
+  GT = 6,
+  BITS_ALL_SET = 7,
+  BITS_ANY_SET = 8,
+  BITS_ALL_NOT_SET = 9,
+  OVERLAPS = 10,
+  NEIGHBOR = 11,
+}
+
+---Execute a function, provided it has not been executed before.
+---@param key string a value that will be checked
+---@param fnc fun(...) function to be executed
+---@vararg any ... arguments to the function
+function box.once(key, fnc, ...) end
 
 return box

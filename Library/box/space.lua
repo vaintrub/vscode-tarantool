@@ -1,7 +1,7 @@
 ---@meta
 --luacheck: ignore
 
----@class box.space:table
+---@type table<string|number, boxSpaceObject>
 box.space = {}
 
 ---@class boxSpaceObject:table
@@ -130,7 +130,7 @@ function boxSpaceObject:run_triggers(flag) end
 
 ---Search for a tuple or a set of tuples in the given space. This method doesn’t yield (for details see Cooperative multitasking).
 ---@param key box.tuple|tuple_type[]|scalar
----@param options boxSpaceSelectOptions
+---@param options? boxSpaceSelectOptions
 ---@return box.tuple[] list the tuples whose primary-key fields are equal to the fields of the passed key. If the number of passed fields is less than the number of fields in the primary key, then only the passed fields are compared, so select{1,2} will match a tuple whose primary key is {1,2,3}.
 function boxSpaceObject:select(key, options) end
 

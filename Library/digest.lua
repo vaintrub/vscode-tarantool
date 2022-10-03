@@ -10,8 +10,18 @@ function digest.sha1_hex(string) end
 digest.xxhash64 = {}
 function digest.xxhash64.new() end
 
-function digest.guava() end
+---Returns a number made with consistent hash.
+---@param state number
+---@param bucket number
+---@return number
+function digest.guava(state, bucket) end
+
+---@param string string
+---@return string
 function digest.base64_decode(string) end
+
+---@param string string
+---@return string
 function digest.sha384(string) end
 
 digest.xxhash32 = {}

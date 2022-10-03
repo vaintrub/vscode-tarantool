@@ -6,7 +6,6 @@ local m = {}
 
 ---@class NetBoxConnectOptions
 ---@field public wait_connected boolean|number
----@field public timeout number
 ---@field public reconnect_after number
 ---@field public user string
 ---@field public password string
@@ -51,8 +50,8 @@ function fut:discard() end
 ---@field public on_push_ctx any ctx for on_push callback
 
 ---@param func string
----@param args any[]
----@param opts NetBoxCallOptions
+---@param args? any[]
+---@param opts? NetBoxCallOptions
 ---@return table
 function conn:call(func, args, opts) end
 
@@ -74,10 +73,32 @@ function conn:on_connect(new_callback, old_callback) end
 ---@param old_callback (fun(conn: NetBoxConnection):nil)|nil
 function conn:on_disconnect(new_callback, old_callback) end
 
+---Wait for connection to be active or closed.
+---@param wait_timeout number
+---@return boolean is_connected true when connected, false on failure.
+function conn:wait_connected(wait_timeout) end
+
+---is a wrapper which sets a timeout for the request that follows it.
+---Since version 1.7.4 this method is deprecated – it is better to pass a timeout value for a method’s {options} parameter.
+---@param request_timeout number
+---@return NetBoxConnection
+---@deprecated
+function conn:timeout(request_timeout) end
+
+---Close a connection.
+---Connection objects are destroyed by the Lua garbage collector, just like any other objects in Lua, so an explicit destruction is not mandatory. However, since close() is a system call, it is good programming practice to close a connection explicitly when it is no longer needed, to avoid lengthy stalls of the garbage collector.
+function conn:close() end
+
 ---Creates connection to Tarantool
 ---@param endpoint string
 ---@param options NetBoxConnectOptions
 ---@return NetBoxConnection
 function m.connect(endpoint, options) end
+
+---Creates connection to Tarantool
+---@param endpoint string
+---@param options NetBoxConnectOptions
+---@return NetBoxConnection
+function m.new(endpoint, options) end
 
 return m

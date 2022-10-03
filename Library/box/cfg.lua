@@ -15,7 +15,7 @@
 ---| 6 # VERBOSE
 ---| 7 # DEBUG
 
----@alias log
+---@alias boxCfglog
 ---| 'file: '
 ---| 'pipe: '
 ---| 'syslog:identity= '
@@ -37,7 +37,7 @@
 ---@field checkpoint_count number (Default: 2) The maximum number of snapshots that may exist on the memtx_dir directory before the checkpoint daemon will delete old snapshots
 ---@field checkpoint_interval number (Default: 3600 (one hour)) The interval between actions by the checkpoint daemon, in seconds. If checkpoint_interval is set to a value greater than zero, and there is activity which causes change to a database, then the checkpoint daemon will call box.snapshot() every checkpoint_interval seconds, creating a new snapshot file each time. If checkpoint_interval is set to zero, then the checkpoint daemon is disabled
 ---@field checkpoint_wal_threshold number (Default: 10^18 (a large number so in effect there is no limit by default)) The threshold for the total size in bytes of all WAL files created since the last checkpoint
----@field coredump boolean (Default: false) DEPRECATED, DO NOT USE 
+---@field coredump boolean (Default: false) DEPRECATED, DO NOT USE
 ---@field custom_proc_title string (Default: nil) Add the given string to the server’s process title
 ---@field election_mode election_mode (Default: off) enables RAFT
 ---@field feedback_enabled boolean (Default: true) Whether to send feedback
@@ -49,7 +49,7 @@
 ---@field io_collect_interval number (Default: nil) The instance will sleep for io_collect_interval seconds between iterations of the event loop. Can be used to reduce CPU load in deployments in which the number of client connections is large, but requests are not so frequent (for example, each connection issues just a handful of requests per second)
 ---@field iproto_threads number (Default: 1) The number of network threads
 ---@field listen string|number (Default: nil) URI to bind tarantool
----@field log log (Default: nil) By default, Tarantool sends the log to the standard error stream (stderr). If log is specified, Tarantool sends the log to a file, or to a pipe, or to the system logger.
+---@field log boxCfglog (Default: nil) By default, Tarantool sends the log to the standard error stream (stderr). If log is specified, Tarantool sends the log to a file, or to a pipe, or to the system logger.
 ---@field log_format log_format (Default: 'plain')
 ---@field log_level log_level (Default: 5) What level of detail the log will have
 ---@field log_nonblock boolean (Default: true) If log_nonblock equals true, Tarantool does not block during logging when the system is not ready for writing, and drops the message instead
