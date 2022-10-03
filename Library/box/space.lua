@@ -4,7 +4,7 @@
 ---@type table<string|number, boxSpaceObject>
 box.space = {}
 
----@class boxSpaceObject:table
+---@class boxSpaceObject: table
 ---@field id number Ordinal space number. Spaces can be referenced by either name or number
 ---@field name string name of the space
 ---@field enabled boolean Whether or not this space is enabled. The value is false if the space has no index.
