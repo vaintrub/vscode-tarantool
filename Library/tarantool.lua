@@ -25,3 +25,21 @@
 ---@alias compound
 ---| map # Tarantool map
 ---| array # Tarantool array
+
+---Convert a string or a Lua number to a 64-bit integer.
+---@param value string|number
+---@return ffi.cdata*|number
+function tonumber64(value) end
+
+---Allocates new Lua table
+---@param narr number
+---@param nrec number
+---@return table
+function table.new(narr, nrec) end
+
+---@param t table
+---@return table
+function table.deepcopy(t) end
+
+---@type ffi.cdata*
+box.NULL = {}

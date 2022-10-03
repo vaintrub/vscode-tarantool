@@ -22,5 +22,26 @@ box.schema.space = {}
 ---@return boxSpaceObject
 function box.schema.space.create(space_name, options) end
 
+box.schema.user = {}
+
+---@alias boxSchemaGrantObjectType
+---| "universe"
+---| "space"
+---| "function"
+---| "sequence"
+---| "role"
+
+---@class boxSchemaGrantOptions
+---@field if_not_exists boolean
+---@field grantor string
+
+---Grant privileges to a user or to another role.
+---@param user_name string
+---@param priv_or_role string
+---@param object_type? boxSchemaGrantObjectType
+---@param object_name? string
+---@param options? boxSchemaGrantOptions
+function box.schema.user.grant(user_name, priv_or_role, object_type, object_name, options) end
+
 
 return box.schema
