@@ -2,7 +2,13 @@
 --luacheck: ignore
 
 ---@class boxIndex
+---@field parts boxIndexPart[] list of index parts
 local boxIndex = {}
+
+---@class boxIndexPart
+---@field type string type of the field
+---@field is_nullable boolean false if field not-nullable, otherwise true
+---@field fieldno number position in tuple of the field
 
 ---@alias IndexPart
 ---| { field: number, type: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string }
@@ -55,4 +61,7 @@ function boxIndex:pairs(key, iterator) end
 ---@return box.tuple? tuple the updated tuple if it was found
 function boxIndex:update(key, update_operations) end
 
-
+---Find the maximum value in the specified index.
+---@param key box.tuple|tuple_type[]|scalar
+---@return box.tuple? tuple the updated tuple if it was found
+function boxIndex:max(key) end

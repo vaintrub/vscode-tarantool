@@ -91,7 +91,7 @@ function conn:close() end
 
 ---Creates connection to Tarantool
 ---@param endpoint string
----@param options NetBoxConnectOptions
+---@param options? NetBoxConnectOptions
 ---@return NetBoxConnection
 function m.connect(endpoint, options) end
 

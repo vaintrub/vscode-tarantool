@@ -43,3 +43,27 @@ function table.deepcopy(t) end
 
 ---@type ffi.cdata*
 box.NULL = {}
+
+---Parse and execute an arbitrary chunk of Lua code. This function is mainly useful to define and run Lua code without having to introduce changes to the global Lua environment.
+---@param lua_chunk_string string Lua code
+---@param ... any zero or more scalar values which will be appended to
+---@return any ... whatever is returned by the Lua code chunk.
+function dostring(lua_chunk_string, ...) end
+
+---@class int64_t: ffi.cdata*
+---@operator add(int64_t|number): int64_t
+---@operator sub(int64_t|number): int64_t
+---@operator mul(int64_t|number): int64_t
+---@operator div(int64_t|number): int64_t
+---@operator unm: int64_t
+---@operator mod(int64_t|number): int64_t
+---@operator pow(int64_t|number): int64_t
+
+---@class uint64_t: ffi.cdata*
+---@operator add(int64_t|number|uint64_t): uint64_t
+---@operator sub(int64_t|number|uint64_t): uint64_t
+---@operator mul(int64_t|number|uint64_t): uint64_t
+---@operator div(int64_t|number|uint64_t): uint64_t
+---@operator unm: uint64_t
+---@operator mod(int64_t|number|uint64_t): uint64_t
+---@operator pow(int64_t|number|uint64_t): uint64_t
