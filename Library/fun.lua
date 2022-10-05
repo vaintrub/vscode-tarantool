@@ -4,7 +4,7 @@
 ---@class fun
 local m = {}
 
----@class Iterator
+---@class Iterator<T>
 local i = {}
 
 ---Returns number of elemenths

@@ -67,3 +67,9 @@ function dostring(lua_chunk_string, ...) end
 ---@operator unm: uint64_t
 ---@operator mod(int64_t|number|uint64_t): uint64_t
 ---@operator pow(int64_t|number|uint64_t): uint64_t
+
+
+---Returns path of the library
+---@param name string
+---@return string
+function package.search(name) end

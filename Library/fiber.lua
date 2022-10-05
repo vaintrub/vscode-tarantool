@@ -25,10 +25,12 @@ function fiber.self() end
 function fiber.find() end
 
 ---Make a fiber go to sleep
+---@async
 ---@param timeout number number of seconds to sleep.
 function fiber.sleep(timeout) end
 
 ---Yield control
+---@async
 function fiber.yield() end
 
 ---Get the current fiber’s status
@@ -92,6 +94,7 @@ fiber_object.storage = {}
 ---Make it possible for a new fiber to join
 function fiber_object:set_joinable() end
 
+---@async
 ---Wait for a fiber’s state to become ‘dead’
 function fiber_object:join() end
 
@@ -104,6 +107,7 @@ local channel_object = {}
 function fiber.channel(capacity) end
 
 ---Send a message via a channel
+---@async
 ---@param message any
 ---@param timeout? number
 ---@return boolean success If timeout is specified, and there is no free slot in the channel for the duration of the timeout, then the return value is false. If the channel is closed, then the return value is false. Otherwise, the return value is true, indicating success.
@@ -113,26 +117,32 @@ function channel_object:put(message, timeout) end
 function channel_object:close() end
 
 ---Fetch a message from a channel
+---@async
 ---@param timeout? number maximum number of seconds to wait for a message. Default: infinity.
 ---@return any message
 function channel_object:get(timeout) end
 
 ---Check if a channel is empty
+---@return boolean # is_empty
 function channel_object:is_empty() end
 
 ---Count messages in a channel
 function channel_object:count() end
 
 ---Check if a channel is full
+---@return boolean # is_full
 function channel_object:is_full() end
 
 ---Check if an empty channel has any readers waiting
+---@return boolean
 function channel_object:has_readers() end
 
 ---Check if a full channel has any writers waiting
+---@return boolean
 function channel_object:has_writers() end
 
 ---Check if a channel is closed
+---@return boolean # is_closed
 function channel_object:is_closed() end
 
 ---@class fiber.cond:userdata
@@ -143,6 +153,7 @@ local cond_object = {}
 function fiber.cond() end
 
 ---Make a fiber go to sleep until woken by another fiber
+---@async
 ---@param timeout? number number of seconds to wait, default = forever.
 ---@return boolean was_signalled If timeout is provided, and a signal doesn’t happen for the duration of the timeout, wait() returns false. If a signal or broadcast happens, wait() returns true.
 function cond_object:wait(timeout) end

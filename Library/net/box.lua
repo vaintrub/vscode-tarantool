@@ -27,10 +27,11 @@ local fut = {}
 function fut:is_ready() end
 
 ---@return table result
----@return nil, BoxError
+---@return nil, BoxErrorObject
 function fut:result() end
 
 --- Waits for result and returns it or raises box.error.TIMEOUT
+---@async
 ---@param timeout number
 ---@return table result
 function fut:wait_result(timeout) end
@@ -46,15 +47,17 @@ function fut:discard() end
 ---@field public timeout number Timeout of Call
 ---@field public is_async boolean makes request asynchronous
 ---@field public return_raw boolean returns raw msgpack (since version 2.10.0)
----@field public on_push fun() callback for each inbound message
+---@field public on_push fun(ctx: any?, msg: any) callback for each inbound message
 ---@field public on_push_ctx any ctx for on_push callback
 
+---@async
 ---@param func string
 ---@param args? any[]
 ---@param opts? NetBoxCallOptions
 ---@return table
 function conn:call(func, args, opts) end
 
+---@async
 ---@param expression string
 ---@param args any[]
 ---@param opts NetBoxCallOptions
@@ -62,6 +65,7 @@ function conn:call(func, args, opts) end
 function conn:eval(expression, args, opts) end
 
 
+---@async
 ---@return boolean
 function conn:ping() end
 
@@ -74,6 +78,7 @@ function conn:on_connect(new_callback, old_callback) end
 function conn:on_disconnect(new_callback, old_callback) end
 
 ---Wait for connection to be active or closed.
+---@async
 ---@param wait_timeout number
 ---@return boolean is_connected true when connected, false on failure.
 function conn:wait_connected(wait_timeout) end
@@ -90,12 +95,14 @@ function conn:timeout(request_timeout) end
 function conn:close() end
 
 ---Creates connection to Tarantool
+---@async
 ---@param endpoint string
 ---@param options? NetBoxConnectOptions
 ---@return NetBoxConnection
 function m.connect(endpoint, options) end
 
 ---Creates connection to Tarantool
+---@async
 ---@param endpoint string
 ---@param options NetBoxConnectOptions
 ---@return NetBoxConnection

@@ -49,7 +49,17 @@ digest.default_seed = 13
 function digest.murmur.new() end
 
 function digest.pbkdf2_hex() end
-function digest.base64_encode() end
+
+---Returns base64 encoding from a regular string.
+---
+---nopad – result must not include ‘=’ for padding at the end,
+---
+---nowrap – result must not include line feed for splitting lines after 72 characters,
+---
+---urlsafe – result must not include ‘=’ or line feed, and may contain ‘-‘ or ‘_’ instead of ‘+’ or ‘/’ for positions 62 and 63 in the index table.
+---@param string_variable string
+---@param b64opts? { nopad: boolean, nowrap: boolean, urlsafe: boolean }
+function digest.base64_encode(string_variable, b64opts) end
 
 digest.crc32 = {}
 digest.crc32.crc_begin = 4294967295
