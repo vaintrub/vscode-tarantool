@@ -4,7 +4,7 @@
 ---@class fun
 local m = {}
 
----@class Iterator
+---@class Iterator<T>
 local i = {}
 
 ---Returns number of elemenths
@@ -34,6 +34,13 @@ function m.range(a, b) end
 --- Returns infinite iterator of 0's
 ---@return Iterator<number>
 function m.zeros() end
+
+--- Returns infinite iterator of 0's
+---@generic T, E
+---@param mapper fun(t: T): E remap function
+---@param list T[] list of items
+---@return Iterator<E>
+function m.map(mapper, list) end
 
 ---Remaps content of iterator
 ---Returns iterator

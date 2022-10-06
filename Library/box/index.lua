@@ -46,7 +46,7 @@ function boxIndex:select(key, options) end
 ---Search for a tuple or a set of tuples in the given space, and allow iterating over one tuple at a time.
 ---@param key box.tuple|tuple_type[]|scalar value to be matched against the index key, which may be multi-part
 ---@param iterator? boxIterator (Default: 'EQ') defines iterator order
----@return boxSpaceIterator,boxSpaceIteratorParam,boxSpaceIteratorState
+---@return fun(iter: Iterator<box.tuple>, state?: string): string, box.tuple
 function boxIndex:pairs(key, iterator) end
 
 ---Update a tuple.
@@ -63,5 +63,16 @@ function boxIndex:update(key, update_operations) end
 
 ---Find the maximum value in the specified index.
 ---@param key box.tuple|tuple_type[]|scalar
----@return box.tuple? tuple the updated tuple if it was found
+---@return box.tuple? tuple result
 function boxIndex:max(key) end
+
+---Find the minimum value in the specified index.
+---@param key box.tuple|tuple_type[]|scalar
+---@return box.tuple? tuple result
+function boxIndex:min(key) end
+
+---Return the number of tuples. If compared with len(), this method works slower because count() scans the entire space to count the tuples.
+---@param key? box.tuple|tuple_type[]|scalar
+---@param iterator? boxIterator
+---@return number number_of_tuples
+function boxIndex:count(key, iterator) end

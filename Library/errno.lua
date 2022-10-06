@@ -2,11 +2,14 @@
 --luacheck: ignore
 
 --TODO:
+---@class errno: table
+---@operator call: number
+local errno = {}
 
-
-local function errno() end
-
-function errno.strerror() end
+---Return a string, given an error number.
+---@param code number?
+---@return string
+function errno.strerror(code) end
 
 
 return errno

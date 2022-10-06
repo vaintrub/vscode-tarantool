@@ -22,6 +22,12 @@ box.schema.space = {}
 ---@return boxSpaceObject
 function box.schema.space.create(space_name, options) end
 
+---@deprecated
+---@param space_name string
+---@param options SpaceCreateOptions|nil
+---@return boxSpaceObject
+function box.schema.create_space(space_name, options) end
+
 box.schema.user = {}
 
 ---@alias boxSchemaGrantObjectType
