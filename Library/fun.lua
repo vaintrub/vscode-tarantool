@@ -35,6 +35,13 @@ function m.range(a, b) end
 ---@return Iterator<number>
 function m.zeros() end
 
+--- Returns infinite iterator of 0's
+---@generic T, E
+---@param mapper fun(t: T): E remap function
+---@param list T[] list of items
+---@return Iterator<E>
+function m.map(mapper, list) end
+
 ---Remaps content of iterator
 ---Returns iterator
 ---@generic T,E
