@@ -42,12 +42,32 @@ function m.zeros() end
 ---@return Iterator<E>
 function m.map(mapper, list) end
 
+---Zips N iterators into one
+---@param ... Iterator
+---@return Iterator
+function m.zip(...) end
+
+---Returns infinite iterator of 1
+---@return Iterator
+function m.ones() end
+
+---Returns infinite iterator of 1
+---@generic T
+---@param func fun(x: T)
+---@param list T[]
+---@return Iterator
+function m.each(func, list) end
+
 ---Remaps content of iterator
 ---Returns iterator
 ---@generic T,E
 ---@param mapper fun(item: T):E
 ---@return Iterator
 function i:map(mapper) end
+
+---Returns iterator with numerated
+---@return Iterator
+function i:enumerate() end
 
 ---Filters original iterator with given predicate
 ---@generic T

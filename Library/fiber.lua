@@ -36,8 +36,20 @@ function fiber.yield() end
 ---Get the current fiber’s status
 function fiber.status() end
 
+---@class FiberInfo
+---@field csw number number of context switches.
+---@field memory { total: number, used: number } `total` is memory occupied by the fiber as a C structure, its stack, etc. `actual` is memory used by the fiber.
+---@field time number duplicates the “time” entry from fiber.top().cpu for each fiber. (Only shown if fiber.top is enabled.)
+---@field name string name of the fiber
+---@field fid number id of the fiber
+---@field backtrace { C: string, L: string }[] fiber’s stack trace
+
 ---Get information about all fibers
+---@return table<number, FiberInfo>
 function fiber.info() end
+
+---@return number fiber_id returns current fiber id
+function fiber.id() end
 
 ---Return a table of alive fibers and show their CPU consumption
 function fiber.top() end

@@ -88,7 +88,9 @@ function fio.copytree() end
 function fio.mktree(path_name) end
 
 ---Delete directories
-function fio.rmtree() end
+---@param path_name string
+---@return boolean success, string? message
+function fio.rmtree(path_name) end
 
 ---Create and delete links
 function fio.link() end

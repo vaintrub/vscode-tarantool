@@ -168,4 +168,9 @@ function boxSpaceObject:update(key, update_operations) end
 ---@param update_operations { [1]: update_operation, [2]: number|string, [3]: tuple_type }[]
 function boxSpaceObject:upsert(tuple, update_operations) end
 
+---Converts table to tuple if it is satisfied by format
+---@param tbl table<string,any>
+---@return box.tuple
+function boxSpaceObject:frommap(tbl) end
+
 return box.space
