@@ -45,8 +45,9 @@ function fiber.status() end
 ---@field backtrace { C: string, L: string }[] fiber’s stack trace
 
 ---Get information about all fibers
+---@param opts? {backtrace:boolean, bt:boolean}`
 ---@return table<number, FiberInfo>
-function fiber.info() end
+function fiber.info(opts) end
 
 ---@return number fiber_id returns current fiber id
 function fiber.id() end
@@ -61,11 +62,11 @@ function fiber.kill() end
 function fiber.testcancel() end
 
 ---Get the system time in seconds as Lua number
----
+---```
 ---tarantool> fiber.time(), fiber.time()
----
 --- - 1448466279.2415
 --- - 1448466279.2415
+---```
 ---@return number
 function fiber.time() end
 
@@ -87,14 +88,17 @@ function fiber.top_disable() end
 local fiber_object = {}
 
 ---Get a fiber’s ID
+---@return number # fiber id
 function fiber_object:id() end
 
 ---Get a fiber’s name
 ---@param name? string
 ---@param options? {truncate: boolean}
+---@return string name
 function fiber_object:name(name, options) end
 
 ---Get a fiber’s status
+---@return "dead"|"running"|"suspended"
 function fiber_object:status() end
 
 ---Cancel a fiber
@@ -104,10 +108,26 @@ function fiber_object:cancel() end
 fiber_object.storage = {}
 
 ---Make it possible for a new fiber to join
-function fiber_object:set_joinable() end
+---`fiber_object:set_joinable(true)` makes a fiber joinable;
+---
+---`fiber_object:set_joinable(false)` makes a fiber not joinable; the default is `false`.
+---
+---A joinable fiber can be waited for, with fiber_object:join().
+---
+---
+---@param true_or_false boolean
+function fiber_object:set_joinable(true_or_false) end
 
 ---@async
+---“Join” a joinable fiber. That is, let the fiber’s function run and wait until the fiber’s status is ‘dead’ (normally a status becomes ‘dead’ when the function execution finishes).
+---
+---Joining will cause a yield, therefore, if the fiber is currently in a suspended state, execution of its fiber function will resume.
+---
+---This kind of waiting is more convenient than going into a loop and periodically checking the status;
+---
+---however, it works only if the fiber was created with `fiber.new()` and was made joinable with `fiber_object:set_joinable()`.
 ---Wait for a fiber’s state to become ‘dead’
+---@return boolean success, any ...
 function fiber_object:join() end
 
 ---@class fiber.channel
@@ -139,6 +159,7 @@ function channel_object:get(timeout) end
 function channel_object:is_empty() end
 
 ---Count messages in a channel
+---@return number
 function channel_object:count() end
 
 ---Check if a channel is full
