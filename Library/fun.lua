@@ -30,7 +30,7 @@ function m.length(tbl) end
 function m.totable(arg) end
 
 ---Builds iterator from incoming type
----@overload fun(generator: fun(), param: any, state: any?): Iterator
+---@overload fun(generator: (fun(state: any, param: any): ...), param: any, state: any?): Iterator
 ---@generic T
 ---@param tbl T[]
 ---@return Iterator
@@ -140,5 +140,9 @@ function i:chain(...) end
 ---@param filter fun(any): boolean
 ---@return Iterator
 function i:take_while(filter) end
+
+---calls func for each value
+---@param func fun(any)
+function i:each(func) end
 
 return m
