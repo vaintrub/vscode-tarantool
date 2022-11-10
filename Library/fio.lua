@@ -335,9 +335,8 @@ function fio.sync() end
 ---@param path_name string
 ---@param flags? number|flags|flags[]
 ---@param mode? number
----@return FileHandle
+---@return FileHandle, BoxErrorObject err?
 function fio.open(path_name, flags, mode) end
-
 
 ---@class FileHandle
 local file_handle = {}

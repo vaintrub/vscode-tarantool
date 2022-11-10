@@ -29,4 +29,8 @@ function log.verbose(s, ...) end
 ---@param ... any
 function log.debug(s, ...) end
 
+---sets log level
+---@param lvl number
+function log.level(lvl) end
+
 return log

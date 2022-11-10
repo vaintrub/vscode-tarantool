@@ -4,6 +4,18 @@
 ---@class fun
 local m = {}
 
+m.op = {}
+
+---Returns true when argument is not nil and not false
+---@param arg any
+---@return boolean
+function m.op.truth(arg) end
+
+---Chains given iterators to single iterator
+---@param ... Iterator|table
+---@return Iterator
+function m.chain(...) end
+
 ---@class Iterator<T>
 local i = {}
 
@@ -12,7 +24,13 @@ local i = {}
 ---@return number length of the items
 function m.length(tbl) end
 
+---@generic T
+---@param arg table<T,any>|T[]
+---@return T[]
+function m.totable(arg) end
+
 ---Builds iterator from incoming type
+---@overload fun(generator: fun(), param: any, state: any?): Iterator
 ---@generic T
 ---@param tbl T[]
 ---@return Iterator
@@ -39,8 +57,14 @@ function m.zeros() end
 ---@generic T, E
 ---@param mapper fun(t: T): E remap function
 ---@param list T[] list of items
----@return Iterator<E>
+---@return Iterator
 function m.map(mapper, list) end
+
+---Filters given arguments against filter
+---@param filter (fun(any): boolean) | string
+---@param list any
+---@return Iterator
+function m.grep(filter, list) end
 
 ---Zips N iterators into one
 ---@param ... Iterator
@@ -102,5 +126,19 @@ function i:sum() end
 ---@param iter Iterator<E>
 ---@return Iterator
 function i:zip(iter) end
+
+---@param cmp fun(any,any): boolean
+---@return any
+function i:max_by(cmp) end
+
+---Chains given iterator to single iterator
+---@param ... Iterator
+---@return Iterator
+function i:chain(...) end
+
+---Ends iterator when filter returns falsy
+---@param filter fun(any): boolean
+---@return Iterator
+function i:take_while(filter) end
 
 return m
