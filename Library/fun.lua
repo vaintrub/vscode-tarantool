@@ -76,16 +76,13 @@ function m.zip(...) end
 function m.ones() end
 
 ---Returns infinite iterator of 1
----@generic T
----@param func fun(x: T)
----@param list T[]
----@return Iterator
+---@param func fun(any)
+---@param list any
 function m.each(func, list) end
 
 ---Remaps content of iterator
 ---Returns iterator
----@generic T,E
----@param mapper fun(item: T):E
+---@param mapper fun(...:any):...any
 ---@return Iterator
 function i:map(mapper) end
 

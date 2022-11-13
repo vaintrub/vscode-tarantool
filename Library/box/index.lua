@@ -1,7 +1,7 @@
 ---@meta
 --luacheck: ignore
 
----@class boxIndex
+---@class boxIndex: boxIndexOptions
 ---@field parts boxIndexPart[] list of index parts
 local boxIndex = {}
 
@@ -16,6 +16,7 @@ local boxIndex = {}
 ---| { [1]: number|string, [2]: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string }
 
 ---@class boxIndexOptions: table
+---@field name string name of the index
 ---@field type "TREE" | "HASH" | "BITSET" | "RTREE" (Default: TREE) type of index
 ---@field id number (Default: last index’s id + 1) unique identifier
 ---@field unique boolean (Default: true) index is unique
@@ -76,3 +77,21 @@ function boxIndex:min(key) end
 ---@param iterator? boxIterator
 ---@return number number_of_tuples
 function boxIndex:count(key, iterator) end
+
+
+---Returns total bsize of tuples in index
+---@return integer
+function boxIndex:bsize() end
+
+---@param key box.tuple|tuple_type[]|scalar
+---@return box.tuple? tuple the deleted tuple
+function boxIndex:delete(key) end
+
+---Alter an index.
+---It is legal in some circumstances to change one or more of the index characteristics,
+---for example its type, its sequence options, its parts, and whether it is unique.
+---
+---Usually this causes rebuilding of the space, except for the simple case
+---where a part’s is_nullable flag is changed from false to true.
+---@param opts boxIndexOptions
+function boxIndex:alter(opts) end

@@ -41,6 +41,10 @@ function table.new(narr, nrec) end
 ---@return table
 function table.deepcopy(t) end
 
+---Clears given table (returns nothing)
+---@param t table
+function table.clear(t) end
+
 ---@type ffi.cdata*
 box.NULL = {}
 
