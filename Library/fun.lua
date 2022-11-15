@@ -11,12 +11,18 @@ m.op = {}
 ---@return boolean
 function m.op.truth(arg) end
 
+---Returns a + b
+---@param a number
+---@param b number
+---@return number
+function m.op.add(a, b) end
+
 ---Chains given iterators to single iterator
 ---@param ... Iterator|table
 ---@return Iterator
 function m.chain(...) end
 
----@class Iterator<T>
+---@class Iterator
 local i = {}
 
 ---Returns number of elemenths
@@ -24,9 +30,8 @@ local i = {}
 ---@return number length of the items
 function m.length(tbl) end
 
----@generic T
----@param arg table<T,any>|T[]
----@return T[]
+---@param arg Iterator|table
+---@return any[]
 function m.totable(arg) end
 
 ---Builds iterator from incoming type
@@ -140,6 +145,11 @@ function i:chain(...) end
 ---@param filter fun(any): boolean
 ---@return Iterator
 function i:take_while(filter) end
+
+---Skips items while filter is false
+---@param filter fun(any): boolean
+---@return Iterator
+function i:drop_while(filter) end
 
 ---calls func for each value
 ---@param func fun(any)
