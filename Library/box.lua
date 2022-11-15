@@ -5,6 +5,9 @@
 ---@field cfg BoxCfg
 box = {}
 
+---returns whether fiber is in transaction
+---@return boolean is_in_txn
+function box.is_in_txn() end
 
 ---@param box_cfg BoxCfg
 ---@return nil
@@ -49,7 +52,7 @@ function box.rollback() end
 --- **Possible errors:**
 ---
 --- * Error if for some reason memory cannot be allocated.
----@return table|BoxError savepoint
+---@return table|BoxErrorObject savepoint
 function box.savepoint() end
 
 --- Do not end the transaction, but cancel all its data-change and box.savepoint() operations that were done after the specified savepoint.
@@ -58,7 +61,7 @@ function box.savepoint() end
 ---
 --- * Error if the savepoint does not exist.
 --- @param savepoint table
---- @return BoxError error
+--- @return BoxErrorObject error
 function box.rollback_to_savepoint(savepoint) end
 
 --TODO: Возможно лучше использовать generic

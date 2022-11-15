@@ -99,7 +99,6 @@ function boxSpaceObject:on_replace(trigger_func, old_trigger_func) end
 ---@return replaceTrigger? func the old trigger if it was replaced or deleted
 function boxSpaceObject:before_replace(trigger_func, old_trigger_func) end
 
-
 ---Search for a tuple or a set of tuples in the given space, and allow iterating over one tuple at a time.
 ---@param key box.tuple|tuple_type[]|scalar value to be matched against the index key, which may be multi-part
 ---@param iterator? boxIterator (Default: 'EQ') defines iterator order
@@ -118,6 +117,11 @@ function boxSpaceObject:rename(space_name) end
 ---@param tuple box.tuple|tuple_type[] tuple to be inserted.
 ---@return box.tuple tuple the inserted tuple
 function boxSpaceObject:replace(tuple) end
+
+---Insert a tuple into a space (synonym for replace).
+---@param tuple box.tuple|tuple_type[] tuple to be inserted.
+---@return box.tuple tuple the inserted tuple
+function boxSpaceObject:put(tuple) end
 
 ---At the time that a trigger is defined, it is automatically enabled - that is, it will be executed. Replace triggers can be disabled with box.space.space-name:run_triggers(false) and re-enabled with box.space.space-name:run_triggers(true).
 ---@param flag boolean
@@ -167,5 +171,10 @@ function boxSpaceObject:update(key, update_operations) end
 ---@param tuple box.tuple|tuple_type[]
 ---@param update_operations { [1]: update_operation, [2]: number|string, [3]: tuple_type }[]
 function boxSpaceObject:upsert(tuple, update_operations) end
+
+---Converts table to tuple if it is satisfied by format
+---@param tbl table<string,any>
+---@return box.tuple
+function boxSpaceObject:frommap(tbl) end
 
 return box.space
