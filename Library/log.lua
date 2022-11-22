@@ -1,5 +1,6 @@
 ---@meta
 --luacheck: ignore
+---@module 'log'
 
 ---@class log: table
 local log = {}

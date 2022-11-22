@@ -76,3 +76,8 @@ function boxIndex:min(key) end
 ---@param iterator? boxIterator
 ---@return number number_of_tuples
 function boxIndex:count(key, iterator) end
+
+
+---Return the total number of bytes taken by the index.
+---@return number
+function boxIndex:bsize() end

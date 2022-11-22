@@ -83,9 +83,9 @@ function boxSpaceObject:insert(tuple) end
 function boxSpaceObject:len() end
 
 ---@alias replaceTrigger
----| fun(old_tuple: box.tuple, new_tuple: box.tuple, space_name: string, request_type: "INSERT" | "UPDATE" | "REPLACE" | "UPSERT")
----| fun(old_tuple: nil, new_tuple: box.tuple, space_name: string, request_type: "INSERT" | "UPDATE" | "REPLACE" | "UPSERT")
----| fun(old_tuple: box.tuple, new_tuple: nil, space_name: string, request_type: "DELETE")
+---| fun(old_tuple: box.tuple, new_tuple: box.tuple, space_name: string, request_type: "INSERT" | "UPDATE" | "REPLACE" | "UPSERT"): box.tuple?
+---| fun(old_tuple: nil, new_tuple: box.tuple, space_name: string, request_type: "INSERT" | "UPDATE" | "REPLACE" | "UPSERT"): box.tuple?
+---| fun(old_tuple: box.tuple, new_tuple: nil, space_name: string, request_type: "DELETE"): box.tuple?
 
 ---Create a “replace trigger”. The trigger-function will be executed whenever a replace() or insert() or update() or upsert() or delete() happens to a tuple in <space-name>.
 ---@param trigger_func replaceTrigger|nil
