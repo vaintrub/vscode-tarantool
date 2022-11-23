@@ -40,25 +40,30 @@ function fio.abspath(file_name) end
 
 ---Check if file or directory exists
 ---
+---@param path string
 ---@return boolean # `true` if path-name refers to a directory or file that exists and is not a broken symbolic link;
 ---otherwise `false`
-function fio.path.exists() end
+function fio.path.exists(path) end
 
 ---Check if file or directory is a directory
+---@param path string
 ---@return boolean # `true` if path-name refers to a directory; otherwise `false`
-function fio.path.is_dir() end
+function fio.path.is_dir(path) end
 
 ---Check if file or directory is a file
+---@param path string
 ---@return boolean # `true` if path-name refers to a file; otherwise `false`
-function fio.path.is_file() end
+function fio.path.is_file(path) end
 
 ---Check if file or directory is a link
+---@param path string
 ---@return boolean # `true` if path-name refers to a symbolic link; otherwise `false`
-function fio.path.is_link() end
+function fio.path.is_link(path) end
 
 ---Check if file or directory exists
+---@param path string
 ---@return boolean # `true` if path-name refers to a directory or file that exists or is a broken symbolic link; otherwise `false`
-function fio.path.lexists() end
+function fio.path.lexists(path) end
 
 ---Set the mask bits used when creating files or directories.
 ---
