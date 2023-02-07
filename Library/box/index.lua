@@ -21,7 +21,7 @@ local boxIndex = {}
 ---@field id number (Default: last index’s id + 1) unique identifier
 ---@field unique boolean (Default: true) index is unique
 ---@field if_not_exists boolean (Default: false) no error if duplicate name
----@field parts IndexPart[] field numbers + types
+---@field parts IndexPart[]|string[] field numbers + types
 ---@field dimension number (Default: 2) affects RTREE only
 ---@field distance "euclid"|"manhattan" (Default: euclid) affects RTREE only
 ---@field bloom_fpr number (Default: vinyl_bloom_fpr) affects vinyl only
