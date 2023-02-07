@@ -31,13 +31,14 @@
 ---@field public ro boolean is true if the instance is in “read-only” mode
 ---@field public package string
 ---@field public vclock integer[] is a table with the vclock values of all instances in a replica set which have made data changes.
----@field public replication table<integer,RepicaInfo>
+---@field public replication table<integer,ReplicaInfo>
 ---@field public election BoxInfoElection shows the current state of a replica set node regarding leader election
 ---@field public signature integer is the sum of all lsn values from each vector clock (vclock) for all instances in the replica set
 ---@field public cluster BoxInfoCluster
+---@field public ro_reason string
 box.info = {}
 
----@class RepicaInfo
+---@class ReplicaInfo
 ---@field public id integer is a short numeric identifier of instance n within the replica set
 ---@field public uuid string is a globally unique identifier of instance n
 ---@field public lsn integer is the log sequence number (LSN) for the latest entry in instance n’s write ahead log (WAL)

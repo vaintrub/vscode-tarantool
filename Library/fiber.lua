@@ -1,6 +1,25 @@
 ---@meta
---luacheck: ignore
---TODO:
+---A fiber is a set of instructions which are executed with cooperative multitasking.
+---Fibers managed by the fiber module are associated with a user-supplied function called the fiber function.
+---A fiber has three possible states, detectable by fiber.status(): running, suspended or dead.
+---When a fiber is created with fiber.create(), it is running.
+---When a fiber is created with fiber.new() or yields control with fiber.sleep(), it is suspended.
+---When a fiber ends (because the fiber function ends), it is dead.
+---All fibers are part of the fiber registry.
+---This registry can be searched with fiber.find() - via fiber id (fid), which is a numeric identifier.
+---A runaway fiber can be stopped with fiber_object.cancel.
+---However, fiber_object.cancel is advisory — it works only if the runaway fiber calls fiber.testcancel() occasionally.
+---Most box.* functions, such as box.space…delete() or box.space…update(), do call fiber.testcancel() but box.space…select{} does not.
+---In practice, a runaway fiber can only become unresponsive if it does many computations and does not check whether it has been cancelled.
+---Like all Lua objects, dead fibers are garbage collected.
+---The Lua garbage collector frees pool allocator memory owned by the fiber, resets all fiber data,
+---and returns the fiber (now called a fiber carcass) to the fiber pool.
+---The carcass can be reused when another fiber is created.
+---A fiber has all the features of a Lua coroutine and all the programming concepts
+---that apply for Lua coroutines will apply for fibers as well.
+---However, Tarantool has made some enhancements for fibers and has used fibers internally.
+---So, although use of coroutines is possible and supported, use of fibers is recommended.
+---@module 'fiber'
 
 local fiber = {}
 
@@ -14,7 +33,6 @@ function fiber.create(func, ...) end
 ---@param func fun(...:any) the function to be associated with the fiber
 ---@vararg ... what will be passed to function
 ---@return Fiber
----@nodiscard
 function fiber.new(func, ...) end
 
 ---Get a fiber object
@@ -22,19 +40,25 @@ function fiber.new(func, ...) end
 function fiber.self() end
 
 ---Get a fiber object by ID
-function fiber.find() end
+---@param id number numeric identifier of the fiber.
+---@return Fiber
+function fiber.find(id) end
 
----Make a fiber go to sleep
+---Yield control to the scheduler and sleep for the specified number of seconds.
+---Only the current fiber can be made to sleep.
 ---@async
 ---@param timeout number number of seconds to sleep.
 function fiber.sleep(timeout) end
 
----Yield control
+---Yield control to the scheduler. Equivalent to `fiber.sleep(0)`.
 ---@async
 function fiber.yield() end
 
----Get the current fiber’s status
-function fiber.status() end
+---Return the status of the current fiber.
+---Or, if optional fiber_object is passed, return the status of the specified fiber.
+---@param fiber_object? Fiber
+---@return "running"|"dead"|"supspected"
+function fiber.status(fiber_object) end
 
 ---@class FiberInfo
 ---@field csw number number of context switches.
@@ -75,9 +99,11 @@ function fiber.time() end
 function fiber.time64() end
 
 ---Get the monotonic time in seconds
+---@return number
 function fiber.clock() end
 
 ---Get the monotonic time in microseconds
+---@return ffi.cdata*
 function fiber.clock64() end
 
 function fiber.top_enable() end
@@ -161,6 +187,10 @@ function channel_object:is_empty() end
 ---Count messages in a channel
 ---@return number
 function channel_object:count() end
+
+---Returns size of channel
+---@return number
+function channel_object:size() end
 
 ---Check if a channel is full
 ---@return boolean # is_full

@@ -41,6 +41,10 @@ function table.new(narr, nrec) end
 ---@return table
 function table.deepcopy(t) end
 
+---Removes all keys from table
+---@param t table
+function table.clear(t) end
+
 ---@type ffi.cdata*
 box.NULL = {}
 
@@ -73,3 +77,7 @@ function dostring(lua_chunk_string, ...) end
 ---@param name string
 ---@return string
 function package.search(name) end
+
+---sets root for require
+---@param path string
+function package.setsearchroot(path) end

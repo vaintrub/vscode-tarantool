@@ -1,8 +1,86 @@
 ---@meta
 --luacheck: ignore
 
---TODO:
----@class errno: table
+---@class errno:table
+---@field E2BIG number Argument list too long (POSIX.1-2001).
+---@field EACCES number Permission denied (POSIX.1-2001).
+---@field EADDRINUSE number Address already in use (POSIX.1-2001).
+---@field EADDRNOTAVAIL number Address not available (POSIX.1-2001).
+---@field EAFNOSUPPORT number Address family not supported (POSIX.1-2001).
+---@field EAGAIN number Resource temporarily unavailable (may be the same value as EWOULDBLOCK) (POSIX.1-2001).
+---@field EALREADY number Connection already in progress (POSIX.1-2001).
+---@field EBADF number Bad file descriptor (POSIX.1-2001).
+---@field EBADMSG number Bad message (POSIX.1-2001).
+---@field EBUSY number Device or resource busy (POSIX.1-2001).
+---@field ECANCELED number Operation canceled (POSIX.1-2001).
+---@field ECHILD number No child processes (POSIX.1-2001).
+---@field ECONNABORTED number Connection aborted (POSIX.1-2001).
+---@field ECONNREFUSED number Connection refused (POSIX.1-2001).
+---@field ECONNRESET number Connection reset (POSIX.1-2001).
+---@field EDEADLK number Resource deadlock avoided (POSIX.1-2001).
+---@field EDESTADDRREQ number Destination address required (POSIX.1-2001).
+---@field EDOM number Mathematics argument out of domain of function (POSIX.1, C99).
+---@field EDQUOT number Disk quota exceeded (POSIX.1-2001).
+---@field EEXIST number File exists (POSIX.1-2001).
+---@field EFAULT number Bad address (POSIX.1-2001).
+---@field EFBIG number File too large (POSIX.1-2001).
+---@field EHOSTUNREACH number Host is unreachable (POSIX.1-2001).
+---@field EIDRM number Identifier removed (POSIX.1-2001).
+---@field EILSEQ number Invalid or incomplete multibyte or wide character (POSIX.1, C99).
+---@field EINPROGRESS number Operation in progress (POSIX.1-2001).
+---@field EINTR number Interrupted function call (POSIX.1-2001); see signal(7).
+---@field EINVAL number Invalid argument (POSIX.1-2001).
+---@field EIO number Input/output error (POSIX.1-2001).
+---@field EISCONN number Socket is connected (POSIX.1-2001).
+---@field EISDIR number Is a directory (POSIX.1-2001).
+---@field ELOOP number Too many levels of symbolic links (POSIX.1-2001).
+---@field EMFILE number Too many open files (POSIX.1-2001).  Commonly caused by exceeding the RLIMIT_NOFILE resource limit described in getrlimit(2).  Can also be caused by exceeding the limit specified in /proc/sys/fs/nr_open.
+---@field EMLINK number Too many links (POSIX.1-2001).
+---@field EMSGSIZE number Message too long (POSIX.1-2001).
+---@field EMULTIHOP number Multihop attempted (POSIX.1-2001).
+---@field ENAMETOOLONG number Filename too long (POSIX.1-2001).
+---@field ENETDOWN number Network is down (POSIX.1-2001).
+---@field ENETRESET number Connection aborted by network (POSIX.1-2001).
+---@field ENETUNREACH number Network unreachable (POSIX.1-2001).
+---@field ENFILE number Too many open files in system (POSIX.1-2001).  On Linux, this is probably a result of encountering the /proc/sys/fs/file-max limit (see proc(5)).
+---@field ENOBUFS number No buffer space available (POSIX.1 (XSI STREAMS option)).
+---@field ENODATA number The named attribute does not exist, or the process has no access to this attribute; see xattr(7).
+---@field ENODEV number No such device (POSIX.1-2001).
+---@field ENOENT number No such file or directory (POSIX.1-2001).
+---@field ENOEXEC number Exec format error (POSIX.1-2001).
+---@field ENOLCK number No locks available (POSIX.1-2001).
+---@field ENOLINK number Link has been severed (POSIX.1-2001).
+---@field ENOMEM number Not enough space/cannot allocate memory (POSIX.1-2001).
+---@field ENOMSG number No message of the desired type (POSIX.1-2001).
+---@field ENOPROTOOPT number Protocol not available (POSIX.1-2001).
+---@field ENOSPC number No space left on device (POSIX.1-2001).
+---@field ENOSR number No STREAM resources (POSIX.1 (XSI STREAMS option)).
+---@field ENOSTR number Not a STREAM (POSIX.1 (XSI STREAMS option)).
+---@field ENOSYS number Function not implemented (POSIX.1-2001).
+---@field ENOTCONN number The socket is not connected (POSIX.1-2001).
+---@field ENOTDIR number Not a directory (POSIX.1-2001).
+---@field ENOTEMPTY number Directory not empty (POSIX.1-2001).
+---@field ENOTSOCK number Not a socket (POSIX.1-2001).
+---@field ENOTSUP number Operation not supported (POSIX.1-2001).
+---@field ENOTTY number Inappropriate I/O control operation (POSIX.1-2001).
+---@field ENXIO number No such device or address (POSIX.1-2001).
+---@field EOPNOTSUPP number Operation not supported on socket (POSIX.1-2001).
+---@field EOVERFLOW number Value too large to be stored in data type (POSIX.1-2001).
+---@field EPERM number Operation not permitted (POSIX.1-2001).
+---@field EPIPE number Broken pipe (POSIX.1-2001).
+---@field EPROTO number Protocol error (POSIX.1-2001).
+---@field EPROTONOSUPPORT number Protocol not supported (POSIX.1-2001).
+---@field EPROTOTYPE number Protocol wrong type for socket (POSIX.1-2001).
+---@field ERANGE number Result too large (POSIX.1, C99).
+---@field EROFS number Read-only filesystem (POSIX.1-2001).
+---@field ESPIPE number Invalid seek (POSIX.1-2001).
+---@field ESRCH number No such process (POSIX.1-2001).
+---@field ESTALE number Stale file handle (POSIX.1-2001).
+---@field ETIME number Timer expired (POSIX.1 (XSI STREAMS option)).
+---@field ETIMEDOUT number Connection timed out (POSIX.1-2001).
+---@field ETXTBSY number Text file busy (POSIX.1-2001).
+---@field EWOULDBLOCK number Operation would block (may be same value as EAGAIN) (POSIX.1-2001).
+---@field EXDEV number Improper link (POSIX.1-2001).
 ---@operator call: number
 local errno = {}
 

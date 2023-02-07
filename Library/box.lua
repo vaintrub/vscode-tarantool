@@ -78,7 +78,7 @@ function box.rollback_to_savepoint(savepoint) end
 function box.atomic(tx_function, ...) end
 
 ---@param trigger_func fun()
----@param old_trigger_func fun()
+---@param old_trigger_func? fun()
 function box.on_commit(trigger_func, old_trigger_func) end
 
 ---@alias boxIterator boxTableIterator

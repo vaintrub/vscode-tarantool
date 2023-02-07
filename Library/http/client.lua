@@ -138,7 +138,7 @@ function http_client:stat() end
 ---@param method string
 ---@param url string
 ---@param body? string
----@param opts ClientHTTPRequestOptions
+---@param opts? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.request(method, url, body, opts) end
@@ -146,14 +146,14 @@ function http.request(method, url, body, opts) end
 ---shortcut for http.request("PATCH", url, body, opts)
 ---@param url string
 ---@param body string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.patch(url, body, options) end
 
 ---shortcut for http.request("OPTIONS", url, nil, opts)
 ---@param url string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.options(url, options) end
@@ -161,21 +161,21 @@ function http.options(url, options) end
 ---shortcut for http.request("PUT", url, body, opts)
 ---@param url string
 ---@param body string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.put(url, body, options) end
 
 ---shortcut for http.request("CONNECT", url, body, opts)
 ---@param url string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.connect(url, options) end
 
 ---shortcut for http.request("DELETE", url, body, opts)
 ---@param url string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.delete(url, options) end
@@ -183,28 +183,28 @@ function http.delete(url, options) end
 ---shortcut for http.request("POST", url, body, opts)
 ---@param url string
 ---@param body string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.post(url, body, options) end
 
 ---shortcut for http.request("TRACE", url, body, opts)
 ---@param url string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.trace(url, options) end
 
 ---shortcut for http.request("HEAD", url, body, opts)
 ---@param url string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.head(url, options) end
 
 ---shortcut for http.request("GET", url, body, opts)
 ---@param url string
----@param options ClientHTTPRequestOptions
+---@param options? ClientHTTPRequestOptions
 ---@return HTTPResponse
 ---@async
 function http.get(url, options) end
