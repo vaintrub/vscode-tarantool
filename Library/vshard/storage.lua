@@ -6,6 +6,8 @@
 local storage = {}
 
 
+---@param cfg VshardCfg
+---@param name string
 function storage.cfg(cfg, name) end
 
 function storage.info() end
@@ -47,7 +49,7 @@ function storage.buckets_count() end
 function storage.sharded_spaces() end
 
 
--- Storage internal API	
+-- Storage internal API
 function storage.bucket_stat(bucket_id) end
 
 function storage.bucket_recv(bucket_id, from, data) end
