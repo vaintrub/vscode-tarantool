@@ -20,7 +20,7 @@ function luatest.after_suite(func) end
 function luatest.before_suite(func) end
 
 ---
----@param name string
+---@param name string?
 ---@param params? table[]
 ---@return luatest.group
 function luatest.group(name, params) end
@@ -199,7 +199,7 @@ function luatest.assert_str_icontains(value, expected, message) end
 ---@param pattern string
 ---@param start number? default: 1
 ---@param final number? default: #value
----@param message string
+---@param message string?
 function luatest.assert_str_matches(value, pattern, start, final, message) end
 
 ---Check value’s type.
@@ -303,9 +303,15 @@ function group.before_each(param, func) end
 
 ---called before test named `test_name` when all params met
 ---@param test_name string
----@param param table
 ---@param func fun(cg: table)
-function group.before_test(test_name, param, func) end
+---@param param table?
+function group.before_test(test_name, func, param) end
+
+---called after test named `test_name` when all params met
+---@param test_name string
+---@param func fun(cg: table)
+---@param param table?
+function group.after_test(test_name, func, param) end
 
 ---@class luatest.server
 ---Class to manage Tarantool instances.
