@@ -79,5 +79,5 @@ function dostring(lua_chunk_string, ...) end
 function package.search(name) end
 
 ---sets root for require
----@param path string
+---@param path ?string
 function package.setsearchroot(path) end

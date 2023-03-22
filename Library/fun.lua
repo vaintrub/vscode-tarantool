@@ -85,6 +85,11 @@ function m.ones() end
 ---@param list any
 function m.each(func, list) end
 
+---Returns infinite iterator of 1
+---@param func fun(any)
+---@param list any
+function m.foreach(func, list) end
+
 ---@generic T
 ---@param tbl T[]
 ---@return T
@@ -110,6 +115,12 @@ function i:enumerate() end
 ---@param grepper fun(item: T): boolean
 ---@return Iterator
 function i:grep(grepper) end
+
+---Filters original iterator with given predicate
+---@generic T
+---@param grepper fun(item: T): boolean
+---@return Iterator
+function i:filter(grepper) end
 
 ---Counts length of iterator (reducer)
 ---@return number
