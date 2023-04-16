@@ -3,6 +3,7 @@
 --luacheck: ignore
 
 ---@class socket
+---@operator call: socket_object
 local socket = {}
 
 ---@class socket_object: table
@@ -28,8 +29,7 @@ function socket.tcp_connect(host, port, timeout) end
 ---@param port number|string port number as a numeric or string
 ---@param timeout? number maximum number of seconds to wait
 ---@param options? { type: string, family: string, flags: any, protocol: string }
----@return {host: string, family: string, type: string, protocol: string, port: number}[]
----@return nil, string error_message
+---@return {host: string, family: string, type: string, protocol: string, port: number}[]?, string error_message
 function socket.getaddrinfo(host, port, timeout, options) end
 
 
@@ -164,7 +164,7 @@ function socket_object:accept() end
 function socket_object:sendto(host, port, data) end
 
 ---Receive a message on a UDP socket.
----@param size number maximum number of bytes to receive.
+---@param size? number maximum number of bytes to receive.
 ---@return string message, { host: string, family: string, port: number } source on success
 ---@return nil, number status, number errno, string errstr on error
 function socket_object:recvfrom(size) end

@@ -95,11 +95,19 @@ function m.min(tbl) end
 ---@return T
 function m.max(tbl) end
 
+---sums all numbers
+---@param t number[]
+---@return number
+function m.sum(t) end
+
 ---Remaps content of iterator
 ---Returns iterator
 ---@param mapper fun(...:any):...any
 ---@return Iterator
 function i:map(mapper) end
+
+---Returns minimal object
+function i:min() end
 
 ---Returns iterator with numerated
 ---@return Iterator
