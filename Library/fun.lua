@@ -85,11 +85,29 @@ function m.ones() end
 ---@param list any
 function m.each(func, list) end
 
+---@generic T
+---@param tbl T[]
+---@return T
+function m.min(tbl) end
+
+---@generic T
+---@param tbl T[]
+---@return T
+function m.max(tbl) end
+
+---sums all numbers
+---@param t number[]
+---@return number
+function m.sum(t) end
+
 ---Remaps content of iterator
 ---Returns iterator
 ---@param mapper fun(...:any):...any
 ---@return Iterator
 function i:map(mapper) end
+
+---Returns minimal object
+function i:min() end
 
 ---Returns iterator with numerated
 ---@return Iterator
@@ -151,5 +169,10 @@ function i:drop_while(filter) end
 ---calls func for each value
 ---@param func fun(any)
 function i:each(func) end
+
+---@param reducer fun(acc: any, ...:any):any
+---@param init_val any? initial value
+---@return any
+function i:reduce(reducer, init_val) end
 
 return m

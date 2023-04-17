@@ -95,7 +95,7 @@ function fiber.testcancel() end
 function fiber.time() end
 
 ---Get the system time in microseconds
----@return ffi.cdata*
+---@return int64_t
 function fiber.time64() end
 
 ---Get the monotonic time in seconds
@@ -129,6 +129,10 @@ function fiber_object:status() end
 
 ---Cancel a fiber
 function fiber_object:cancel() end
+
+---returns csw of the fiber
+---@return number
+function fiber_object:csw() end
 
 ---Local storage within the fiber
 fiber_object.storage = {}
