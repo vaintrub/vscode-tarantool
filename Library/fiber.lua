@@ -80,7 +80,8 @@ function fiber.id() end
 function fiber.top() end
 
 ---Cancel a fiber
-function fiber.kill() end
+---@param fiber_object Fiber
+function fiber.kill(fiber_object) end
 
 ---Check if the current fiber has been cancelled
 function fiber.testcancel() end
