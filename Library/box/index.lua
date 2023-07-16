@@ -11,9 +11,9 @@ local boxIndex = {}
 ---@field fieldno number position in tuple of the field
 
 ---@alias IndexPart
----| { field: number, type: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string }
----| { field: string, is_nullable: boolean, collation: string, path: string }
----| { [1]: number|string, [2]: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string }
+---| { field: number, type: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string, fieldno: number }
+---| { field: string, is_nullable: boolean, collation: string, path: string, fieldno: number }
+---| { [1]: number|string, [2]: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string, fieldno: number }
 
 ---@class boxIndexOptions: table
 ---@field name string name of the index
@@ -95,3 +95,12 @@ function boxIndex:delete(key) end
 ---where a part’s is_nullable flag is changed from false to true.
 ---@param opts boxIndexOptions
 function boxIndex:alter(opts) end
+
+---Return a tuple’s position for an index.
+---
+---This value can be passed to the after option of the select and pairs methods
+---
+---Note that tuple_pos does not work with functional and multikey indexes.
+---@param tuple scalar|table
+---@return string # base64-encoded string (a tuple’s position in a space)
+function boxIndex:tuple_pos(tuple) end

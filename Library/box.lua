@@ -71,8 +71,7 @@ function box.rollback_to_savepoint(savepoint) end
 --- * Error and abort the transaction in case of a conflict.
 --- * Error if the operation fails to write to disk.
 --- * Error if for some reason memory cannot be allocated.
----@generic T
----@param tx_function fun(...: any): ...: T
+---@param tx_function fun(...: any): ...
 ---@param ... any
 ---@return ...? The result of the function passed to atomic() as an argument.
 function box.atomic(tx_function, ...) end
@@ -85,6 +84,7 @@ function box.on_commit(trigger_func, old_trigger_func) end
 
 ---@class boxTableIterator
 ---@field iterator "GE"|"GT"|"LT"|"LE"|"EQ"|"REQ"|"BITS_ALL_NOT_SET"|"BITS_ALL_SET"|"BITS_ANY_SET"|"OVERLAPS"|"NEIGHBOR"|"ALL"|boxIndexIterator
+---@field after string|nil? position in index (starting from Tarantool ≥ 2.11)
 
 ---@enum boxIndexIterator
 box.index = {
@@ -161,5 +161,38 @@ function box.error.new(err) end
 
 ---@return BoxErrorObject
 function box.error.last() end
+
+---@class BoxStatDefault
+---@field total number
+---@field rps number
+
+---@class BoxStatDefaultWithCurrent:BoxStatDefault
+---@field current number
+
+---@class BoxStatNet
+---@field SENT BoxStatDefault sent bytes to iproto
+---@field RECEIVED BoxStatDefault received bytes from iproto
+---@field CONNECTIONS BoxStatDefaultWithCurrent iproto connections statistics
+---@field REQUESTS BoxStatDefaultWithCurrent iproto requests statistics
+
+---@class BoxStat
+---@field reset fun() # resets current statistics
+---@field net fun(): BoxStatNet
+---@overload fun(): BoxStatInfo
+
+---@class BoxStatInfo
+---@field INSERT BoxStatDefault
+---@field DELETE BoxStatDefault
+---@field SELECT BoxStatDefault
+---@field REPLACE BoxStatDefault
+---@field UPDATE BoxStatDefault
+---@field UPSERT BoxStatDefault
+---@field CALL BoxStatDefault
+---@field EVAL BoxStatDefault
+---@field AUTH BoxStatDefault
+---@field ERROR BoxStatDefault
+
+---@type BoxStat
+box.stat = {}
 
 return box

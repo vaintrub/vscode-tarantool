@@ -59,6 +59,7 @@ function digest.pbkdf2_hex() end
 ---urlsafe – result must not include ‘=’ or line feed, and may contain ‘-‘ or ‘_’ instead of ‘+’ or ‘/’ for positions 62 and 63 in the index table.
 ---@param string_variable string
 ---@param b64opts? { nopad: boolean, nowrap: boolean, urlsafe: boolean }
+---@return string
 function digest.base64_encode(string_variable, b64opts) end
 
 digest.crc32 = {}

@@ -61,7 +61,7 @@ function conn:call(func, args, opts) end
 ---@param expression string
 ---@param args any[]
 ---@param opts NetBoxCallOptions
----@return table
+---@return ...
 function conn:eval(expression, args, opts) end
 
 

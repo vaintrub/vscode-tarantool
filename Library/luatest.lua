@@ -9,6 +9,7 @@
 ---helpers for testing tarantool applications,
 ---luacov integration.
 
+---@class luatest
 local luatest = {}
 
 ---Add after suite hook.
