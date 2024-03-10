@@ -23,12 +23,12 @@ local boxSpaceObject = {}
 function boxSpaceObject:create_index(index_name, options) end
 
 ---@class SpaceAlterOptions
----@field name string name of the space
----@field field_count number fixed count of fields: for example if field_count=5, it is illegal to insert a tuple with fewer than or more than 5 fields
----@field format boxSpaceFormat
----@field is_sync boolean (Default: false) any transaction doing a DML request on this space becomes synchronous
----@field temporary boolean (Default: false) space contents are temporary: changes are not stored in the write-ahead log and there is no replication. Note regarding storage engine: vinyl does not support temporary spaces.
----@field user string (Default: current user’s name) name of the user who is considered to be the space’s owner for authorization purposes
+---@field name? string name of the space
+---@field field_count? number fixed count of fields: for example if field_count=5, it is illegal to insert a tuple with fewer than or more than 5 fields
+---@field format? boxSpaceFormat
+---@field is_sync? boolean (Default: false) any transaction doing a DML request on this space becomes synchronous
+---@field temporary? boolean (Default: false) space contents are temporary: changes are not stored in the write-ahead log and there is no replication. Note regarding storage engine: vinyl does not support temporary spaces.
+---@field user? string (Default: current user’s name) name of the user who is considered to be the space’s owner for authorization purposes
 
 
 ---Since version 2.5.2. Alter an existing space. This method changes certain space parameters.
@@ -46,9 +46,9 @@ function boxSpaceObject:bsize() end
 function boxSpaceObject:count(key, iterator) end
 
 ---@class boxSpaceFieldFormat
----@field name string value may be any string, provided that two fields do not have the same name
----@field type "any" | "unsigned" | "string" | "integer" | "number" | "varbinary" | "boolean" | "double" | "decimal" | "uuid" | "array" | "map" | "scalar" value may be any of allowed types
----@field is_nullable boolean
+---@field name? string value may be any string, provided that two fields do not have the same name
+---@field type? "any" | "unsigned" | "string" | "integer" | "number" | "varbinary" | "boolean" | "double" | "decimal" | "uuid" | "array" | "map" | "scalar" value may be any of allowed types
+---@field is_nullable? boolean
 
 ---@alias boxSpaceFormat boxSpaceFieldFormat[]
 ---field names and types: See the illustrations of format clauses in the space_object:format() description and in the box.space._space example. Optional and usually not specified.
@@ -128,9 +128,9 @@ function boxSpaceObject:put(tuple) end
 function boxSpaceObject:run_triggers(flag) end
 
 ---@class boxSpaceSelectOptions: table
----@field iterator boxIterator type of the iterator
----@field limit number maximum number of tuples
----@field offset number number of tuples to skip
+---@field iterator? boxIterator type of the iterator
+---@field limit? number maximum number of tuples
+---@field offset? number number of tuples to skip
 
 ---Search for a tuple or a set of tuples in the given space. This method doesn’t yield (for details see Cooperative multitasking).
 ---@param key box.tuple|tuple_type[]|scalar

@@ -16,22 +16,22 @@ local boxIndex = {}
 ---| { [1]: number|string, [2]: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string, fieldno: number }
 
 ---@class boxIndexOptions: table
----@field name string name of the index
----@field type "TREE" | "HASH" | "BITSET" | "RTREE" (Default: TREE) type of index
----@field id number (Default: last index’s id + 1) unique identifier
----@field unique boolean (Default: true) index is unique
----@field if_not_exists boolean (Default: false) no error if duplicate name
----@field parts IndexPart[]|string[] field numbers + types
----@field dimension number (Default: 2) affects RTREE only
----@field distance "euclid"|"manhattan" (Default: euclid) affects RTREE only
----@field bloom_fpr number (Default: vinyl_bloom_fpr) affects vinyl only
----@field page_size number (Default: vinyl_page_size) affects vinyl only
----@field range_size number (Default: vinyl_range_size) affects vinyl only
----@field run_count_per_level number (Default: vinyl_run_count_per_level) affects vinyl only
----@field run_size_ratio number (Default: vinyl_run_size_ratio) affects vinyl only
----@field sequence string|number
----@field func string functional index
----@field hint boolean (Default: true) affects TREE only. true makes an index work faster, false – index size is reduced by half
+---@field name? string name of the index
+---@field type? "TREE" | "HASH" | "BITSET" | "RTREE" (Default: TREE) type of index
+---@field id? number (Default: last index’s id + 1) unique identifier
+---@field unique? boolean (Default: true) index is unique
+---@field if_not_exists? boolean (Default: false) no error if duplicate name
+---@field parts? IndexPart[]|string[] field numbers + types
+---@field dimension? number (Default: 2) affects RTREE only
+---@field distance? "euclid"|"manhattan" (Default: euclid) affects RTREE only
+---@field bloom_fpr? number (Default: vinyl_bloom_fpr) affects vinyl only
+---@field page_size? number (Default: vinyl_page_size) affects vinyl only
+---@field range_size? number (Default: vinyl_range_size) affects vinyl only
+---@field run_count_per_level? number (Default: vinyl_run_count_per_level) affects vinyl only
+---@field run_size_ratio? number (Default: vinyl_run_size_ratio) affects vinyl only
+---@field sequence? string|number
+---@field func? string functional index
+---@field hint? boolean (Default: true) affects TREE only. true makes an index work faster, false – index size is reduced by half
 
 ---Search for a tuple in the given space.
 ---@param key box.tuple|tuple_type[]|scalar
@@ -47,7 +47,7 @@ function boxIndex:select(key, options) end
 ---Search for a tuple or a set of tuples in the given space, and allow iterating over one tuple at a time.
 ---@param key box.tuple|tuple_type[]|scalar value to be matched against the index key, which may be multi-part
 ---@param iterator? boxIterator (Default: 'EQ') defines iterator order
----@return fun(iter: Iterator<box.tuple>, state?: string): string, box.tuple
+---@return Iterator
 function boxIndex:pairs(key, iterator) end
 
 ---Update a tuple.

@@ -34,4 +34,9 @@ function log.debug(s, ...) end
 ---@param lvl number
 function log.level(lvl) end
 
+---Since 2.11.0
+---@param name string
+---@return log
+function log.new(name) end
+
 return log

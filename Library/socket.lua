@@ -16,7 +16,7 @@ function socket_object:fd() end
 ---Connect a socket to a remote host.
 ---@async
 ---@param host string URL or IP address
----@param port number? port number
+---@param port number|string? port number string for unix socket
 ---@param timeout number? number of seconds to wait
 ---@return socket_object
 ---@return nil, string error_message

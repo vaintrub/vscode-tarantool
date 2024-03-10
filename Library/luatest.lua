@@ -294,7 +294,7 @@ function group.after_each(func) end
 function group.before_all(func) end
 
 ---Add callback to run before each test in the group.
----@param func fun()
+---@param func fun(cg: table)
 function group.before_each(func) end
 
 ---called only before the test when `param` met
@@ -422,18 +422,18 @@ function server:http_request(method, path, options) end
 ---@field command string? Executable path to run a server process with.Defaults to the internal server_instance.lua script.
 ---If a custom pathis provided, it should correctly process all env variables listed belowto make constructor parameters work. (optional)
 ---@field args table? Arbitrary args to run object.command with. (optional)
----@field env table<string,string|number|boolean> Pass the given env variables into the server process. (optional)
----@field chdir string Change to the given directory before runningthe server process. (optional)
----@field alias string Alias for the new server and the value of the `TARANTOOL_ALIAS` env variable which is passed into the server process.Defaults to ‘server’.
+---@field env? table<string,string|number|boolean> Pass the given env variables into the server process. (optional)
+---@field chdir? string Change to the given directory before runningthe server process. (optional)
+---@field alias? string Alias for the new server and the value of the `TARANTOOL_ALIAS` env variable which is passed into the server process.Defaults to ‘server’.
 ---@field workdir string Working directory for the new server and thevalue of the TARANTOOL_WORKDIR env variable which is passed into theserver process.
 ---Defaults to <vardir>/<alias>-<random id>. (optional)
----@field datadir string Directory path whose contents will be recursively copied into object.workdir during initialization. (optional)
----@field http_port number Port for HTTP connection to the new server andthe value of the TARANTOOL_HTTP_PORT env variable which is passed intothe server process.
+---@field datadir? string Directory path whose contents will be recursively copied into object.workdir during initialization. (optional)
+---@field http_port? number Port for HTTP connection to the new server andthe value of the TARANTOOL_HTTP_PORT env variable which is passed intothe server process.
 ---Not supported in the default server_instance.lua script. (optional)
----@field net_box_port number Port for the net.box connection to the newserver and the value of the TARANTOOL_LISTEN env variable which is passed into the server process. (optional)
----@field net_box_uri string URI for the net.box connection to the newserver and the value of the TARANTOOL_LISTEN env variable which is passed into the server process. (optional)
----@field net_box_credentials table Override the default credentials for the net.box connection to the new server.
----@field box_cfg BoxCfg Extra options for box.cfg() and the value of the TARANTOOL_BOX_CFG env variable which is passed into the server process.
+---@field net_box_port? number Port for the net.box connection to the newserver and the value of the TARANTOOL_LISTEN env variable which is passed into the server process. (optional)
+---@field net_box_uri? string URI for the net.box connection to the newserver and the value of the TARANTOOL_LISTEN env variable which is passed into the server process. (optional)
+---@field net_box_credentials? table Override the default credentials for the net.box connection to the new server.
+---@field box_cfg? BoxCfg Extra options for box.cfg() and the value of the TARANTOOL_BOX_CFG env variable which is passed into the server process.
 
 ---Build a server object.
 ---@param options luatest.server.options
