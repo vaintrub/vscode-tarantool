@@ -5,7 +5,9 @@
 local server = {}
 
 ---@return ServerHTTP
-function server.new() end
+---@param host ?string
+---@param port ?number
+function server.new(host, port) end
 
 
 ---@class ServerHTTP
