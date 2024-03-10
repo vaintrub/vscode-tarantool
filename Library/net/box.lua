@@ -100,7 +100,7 @@ function conn:is_connected() end
 
 ---Creates connection to Tarantool
 ---@async
----@param endpoint string
+---@param endpoint string|table
 ---@param options? NetBoxConnectOptions
 ---@return NetBoxConnection
 function m.connect(endpoint, options) end

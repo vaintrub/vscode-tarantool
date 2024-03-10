@@ -18,3 +18,5 @@ function box.ctl.wait_rw(timeout) end
 ---@async
 ---@param timeout? number
 function box.ctl.wait_ro(timeout) end
+
+function box.ctl.on_shutdown() end
