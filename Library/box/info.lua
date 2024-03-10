@@ -19,6 +19,16 @@
 ---@class BoxInfoCluster
 ---@field public uuid string replicaset_uuid of the replicaset this instance belong
 
+---@class BoxInfoSynchroQueue
+---@field public owner number ID of the replica that owns the synchronous transaction queue.
+---@field public term number current queue term. It contains the term of the last PROMOTE request.
+---@field public len number the number of entries that are currently waiting in the queue.
+---@field public busy boolean the boolean value is true when the instance is processing or writing some system request that modifies the queue (for example, PROMOTE, CONFIRM, or ROLLBACK).
+
+---@class BoxInfoSynchro
+---@field public quorum number  the resulting value of the replication_synchro_quorum configuration option.
+---@field public queue BoxInfoSynchroQueue
+
 ---@class BoxInfo: table
 ---The box.info submodule provides access to information about server instance variables.
 ---@field public id integer is a short numeric identifier of instance n within the replica set. This value is stored in the box.space._cluster system space.
@@ -36,6 +46,7 @@
 ---@field public signature integer is the sum of all lsn values from each vector clock (vclock) for all instances in the replica set
 ---@field public cluster BoxInfoCluster
 ---@field public ro_reason string
+---@field public synchro table
 box.info = {}
 
 ---@class ReplicaInfo

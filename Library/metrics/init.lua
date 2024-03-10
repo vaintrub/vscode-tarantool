@@ -10,8 +10,8 @@ local metrics = {}
 --- network, operations, system, replicas, info, slab, runtime, memory, event_loop,
 ---
 --- spaces, fibers, cpu, vinyl, memtx, luajit, cartridge_issues, cartridge_failover, clock
----@param include string[] table containing the names of the default metrics that you need to enable.
----@param exclude string[] table containing the names of the default metrics that you need to exclude.
+---@param include string[]? table containing the names of the default metrics that you need to enable.
+---@param exclude string[]? table containing the names of the default metrics that you need to exclude.
 function metrics.enable_default_metrics(include, exclude) end
 
 

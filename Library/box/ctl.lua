@@ -4,6 +4,10 @@
 ---@class boxCtl
 box.ctl = {}
 
+function box.ctl.promote() end
+
+function box.ctl.demote() end
+
 
 ---Wait until box.info.ro is false.
 ---@async

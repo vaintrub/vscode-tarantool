@@ -56,4 +56,10 @@ function box.tuple:totable(start_field_number, end_field_number) end
 ---@return table<number|string, any>
 function box.tuple:tomap(options) end
 
+---Update a tuple.
+---
+---@param update_operations { [1]: update_operation, [2]: number|string, [3]: tuple_type }[]
+---@return box.tuple
+function box.tuple:update(update_operations) end
+
 return box.tuple

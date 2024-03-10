@@ -17,6 +17,7 @@ function box.cfg(box_cfg) end
 ---| 'best-effort'
 ---| 'read-committed'
 ---| 'read-confirmed'
+---| 'linearizable'
 
 --- Begin the transaction. Disable implicit yields until the transaction ends.
 --- Signal that writes to the write-ahead log will be deferred until the transaction ends.
@@ -64,8 +65,10 @@ function box.savepoint() end
 --- @return BoxErrorObject error
 function box.rollback_to_savepoint(savepoint) end
 
---TODO: Возможно лучше использовать generic
---- Execute a function, acting as if the function starts with an implicit box.begin() and ends with an implicit box.commit() if successful, or ends with an implicit box.rollback() if there is an error.
+---#if _TARANTOOL<2.10.0
+
+--- Execute a function, acting as if the function starts with an implicit box.begin() and ends with an implicit box.commit()
+---if successful, or ends with an implicit box.rollback() if there is an error.
 ---
 --- **Possible errors:**
 --- * Error and abort the transaction in case of a conflict.
@@ -75,9 +78,22 @@ function box.rollback_to_savepoint(savepoint) end
 ---@param ... any
 ---@return ...? The result of the function passed to atomic() as an argument.
 function box.atomic(tx_function, ...) end
+---#else
 
----@param trigger_func fun()
----@param old_trigger_func? fun()
+---Starting with 2.10.1
+---@param opts { txn_isolation: txn_isolation }
+---@param tx_function fun(...: any): ...?
+---@param ... any
+---@return ...? The result of the function passed to atomic() as an argument.
+function box.atomic(opts, tx_function, ...) end
+---#end
+
+---@alias onCommitIterator fun():(number, box.tuple|nil, box.tuple|nil, number) request_id, old_tuple, new_tuple, space_id
+
+---@alias onCommitTriggerFunc fun(iterator: onCommitIterator?)
+
+---@param trigger_func onCommitTriggerFunc
+---@param old_trigger_func? onCommitTriggerFunc
 function box.on_commit(trigger_func, old_trigger_func) end
 
 ---@alias boxIterator boxTableIterator
@@ -127,6 +143,7 @@ function box.error(code, errtext, ...) end
 ---@field type string (usually ClientError)
 ---@field base_type string (usually ClientError)
 ---@field code number number of error
+---@field prev? BoxErrorObject previous error
 ---@field message any message of error given during `box.error.new`
 local box_error_object = {}
 
@@ -138,6 +155,7 @@ local box_error_object = {}
 ---@field code number error’s number
 ---@field type string error’s C++ class
 ---@field message string error’s message
+---@field prev? BoxErrorObject previous error
 ---@field base_type string usually ClientError or CustomError
 ---@field custom_type string? present if custom ErrorType was passed
 ---@field trace BoxErrorTrace[]? backtrace
@@ -194,5 +212,28 @@ function box.error.last() end
 
 ---@type BoxStat
 box.stat = {}
+
+---@async
+---Creates new snapshot of the data and executes checkpoint.gc process
+function box.snapshot() end
+
+---@class box.watcher
+local watcher = {}
+
+---unregisters the watcher
+function watcher:unregister() end
+
+---@since 2.10.0
+---Update the value of a particular key and notify all key watchers of the update.
+---@param key string
+---@param value any
+function box.broadcast(key, value) end
+
+---@since 2.10.0
+---Subscribe to events broadcast by a local host.
+---@param key string
+---@param func fun(key: string, value: any)
+---@return box.watcher
+function box.watch(key, func) end
 
 return box

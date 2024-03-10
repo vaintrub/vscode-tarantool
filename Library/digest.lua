@@ -4,7 +4,10 @@
 
 local digest = {}
 
+---@return string
 function digest.sha512_hex(string) end
+
+---@return string
 function digest.sha1_hex(string) end
 
 digest.xxhash64 = {}
