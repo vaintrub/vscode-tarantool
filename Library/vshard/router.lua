@@ -21,13 +21,13 @@
 ---@field api_call_cache function Reference to the function-proxy to most of the public functions. It allows to avoid 'if's in each function by adding expensive conditional checks in one rarely used version of the wrapper and no checks into the other almost always used wrapper.
 local router = {}
 
-	
+
 ---@class BootstrapOptions
----@field timeout number A number of seconds before ending a bootstrap attempt as unsuccessful. Recreate the cluster in case of bootstrap timeout.
----@field if_not_bootstrapped boolean  By default is set to false that means raise an error, when the cluster is already bootstrapped. True means consider an already bootstrapped cluster a success.
+---@field timeout? number A number of seconds before ending a bootstrap attempt as unsuccessful. Recreate the cluster in case of bootstrap timeout.
+---@field if_not_bootstrapped? boolean  By default is set to false that means raise an error, when the cluster is already bootstrapped. True means consider an already bootstrapped cluster a success.
 
 --- Perform the initial cluster bootstrap and distribute all buckets across the replica sets.
---- 
+---
 --- **Note:**
 --- To detect whether a cluster is bootstrapped, vshard looks for at least one bucket in the whole cluster.
 --- If the cluster was bootstrapped only partially (for example, due to an error during the first bootstrap),
@@ -213,7 +213,7 @@ function router.discovery_set(mode) end
 ---@field unavailable number The number of buckets known to the router but unavailable for any requests
 ---@field unreachable number The number of buckets whose replica sets are not known to the router
 
-  
+
 ---Return information about each instance
 ---@return {replicasets: table<UUID, replicasetInfo>, bucket: bucketInfo, status: number, alerts: string[]}
 function router.info() end

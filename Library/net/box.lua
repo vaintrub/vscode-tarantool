@@ -5,18 +5,19 @@
 local m = {}
 
 ---@class NetBoxConnectOptions
----@field public wait_connected boolean|number
----@field public reconnect_after number
----@field public user string
----@field public password string
----@field public connect_timeout number
+---@field public wait_connected? boolean|number
+---@field public reconnect_after? number
+---@field public user? string
+---@field public password? string
+---@field public connect_timeout? number
 
 ---@class NetBoxConnection
 ---@field public host string
 ---@field public port string
----@field public state string
+---@field public state 'active'|'fetch_schema'|'error'|'error_reconnect'|'closed'|'initial'|'graceful_shutdown'
 ---@field public error string
 ---@field public peer_uuid string|nil
+---@field public _fiber? Fiber
 local conn = {}
 
 ---@class NetBoxFuture
@@ -40,15 +41,15 @@ function fut:wait_result(timeout) end
 function fut:discard() end
 
 ---@class NetBoxRequestOptions
----@field public is_async boolean
----@field public timeout number
+---@field public is_async? boolean
+---@field public timeout? number
 
 ---@class NetBoxCallOptions
----@field public timeout number Timeout of Call
----@field public is_async boolean makes request asynchronous
----@field public return_raw boolean returns raw msgpack (since version 2.10.0)
----@field public on_push fun(ctx: any?, msg: any) callback for each inbound message
----@field public on_push_ctx any ctx for on_push callback
+---@field public timeout number? Timeout of Call
+---@field public is_async boolean? makes request asynchronous
+---@field public return_raw boolean? returns raw msgpack (since version 2.10.0)
+---@field public on_push fun(ctx: any?, msg: any)? callback for each inbound message
+---@field public on_push_ctx any? ctx for on_push callback
 
 ---@async
 ---@param func string
@@ -59,8 +60,8 @@ function conn:call(func, args, opts) end
 
 ---@async
 ---@param expression string
----@param args any[]
----@param opts NetBoxCallOptions
+---@param args any[]?
+---@param opts NetBoxCallOptions?
 ---@return table
 function conn:eval(expression, args, opts) end
 
@@ -94,9 +95,12 @@ function conn:timeout(request_timeout) end
 ---Connection objects are destroyed by the Lua garbage collector, just like any other objects in Lua, so an explicit destruction is not mandatory. However, since close() is a system call, it is good programming practice to close a connection explicitly when it is no longer needed, to avoid lengthy stalls of the garbage collector.
 function conn:close() end
 
+---@return boolean
+function conn:is_connected() end
+
 ---Creates connection to Tarantool
 ---@async
----@param endpoint string
+---@param endpoint string|table
 ---@param options? NetBoxConnectOptions
 ---@return NetBoxConnection
 function m.connect(endpoint, options) end

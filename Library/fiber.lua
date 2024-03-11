@@ -76,11 +76,18 @@ function fiber.info(opts) end
 ---@return number fiber_id returns current fiber id
 function fiber.id() end
 
+---@class FiberTop
+---@field instant number  (in percent), which indicates the share of time the fiber was executing during the previous event loop iteration.
+---@field average number (in percent), which is calculated as an exponential moving average of instant values over all the previous event loop iterations.
+---@field time number (in seconds), which estimates how much CPU time each fiber spent processing during its lifetime.
+
 ---Return a table of alive fibers and show their CPU consumption
+---@return { cpu: table<string,FiberTop>, cpu_misses: number }
 function fiber.top() end
 
 ---Cancel a fiber
-function fiber.kill() end
+---@param fiber_object Fiber
+function fiber.kill(fiber_object) end
 
 ---Check if the current fiber has been cancelled
 function fiber.testcancel() end
@@ -109,6 +116,33 @@ function fiber.clock64() end
 function fiber.top_enable() end
 
 function fiber.top_disable() end
+
+---Check whether a slice for the current fiber is over.
+---
+---A fiber slice limits the time period of executing a fiber without yielding control.
+function fiber.check_slice() end
+
+---@class fiber.slice
+---@field warn number
+---@field err number
+
+---Set a slice for the current fiber execution.
+---
+---A fiber slice limits the time period of executing a fiber without yielding control.
+---@param slice fiber.slice|number a time period (in seconds) that specifies the error slice
+function fiber.set_slice(slice) end
+
+---Set the default maximum slice for all fibers.
+---
+---A fiber slice limits the time period of executing a fiber without yielding control.
+---@param slice fiber.slice|number a time period (in seconds) that specifies the error slice
+function fiber.set_max_slice(slice) end
+
+---Extend a slice for the current fiber execution.
+---For example, if the default error slice is set using fiber.set_max_slice() to 3 seconds, extend_slice(1)
+---extends the error slice to 4 seconds.
+---@param slice fiber.slice|number a time period (in seconds) that specifies the error slice
+function fiber.extend_slice(slice) end
 
 ---@class Fiber: userdata
 local fiber_object = {}

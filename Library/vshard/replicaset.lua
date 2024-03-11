@@ -57,7 +57,7 @@ function replicaset_object:callro(function_name, argument_list, options) end
 ---The `replicaset_object:callrw` method is similar to `replicaset_object:call`
 ---@param function_name string A function to execute
 ---@param argument_list table An array of the function’s arguments
----@param options NetBoxCallOptions net.box options. `timeout` - if the router cannot identify a shard with the specified bucket_id, the operation will be repeated until the timeout is reached.
+---@param options? NetBoxCallOptions net.box options. `timeout` - if the router cannot identify a shard with the specified bucket_id, the operation will be repeated until the timeout is reached.
 ---@return any # Result of function_name on success or nil otherwise
 ---@return ShardingErrors? # Error on failure
 function replicaset_object:callrw(function_name, argument_list, options) end
