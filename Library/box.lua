@@ -19,6 +19,10 @@ function box.cfg(box_cfg) end
 ---| 'read-confirmed'
 ---| 'linearizable'
 
+---@class begin_options
+---@field txn_isolation? txn_isolation the transaction isolation level (default: best-effort)
+---@field timeout? number a timeout (in seconds), after which the transaction is rolled back
+
 --- Begin the transaction. Disable implicit yields until the transaction ends.
 --- Signal that writes to the write-ahead log will be deferred until the transaction ends.
 --- In effect the fiber which executes box.begin() is starting an “active multi-request transaction”, blocking all other fibers
@@ -28,8 +32,8 @@ function box.cfg(box_cfg) end
 ---   - Error if this operation is not permitted because there is already an active transaction.
 ---
 ---   - Error if for some reason memory cannot be allocated.
----@param txn_isolation? { txn_isolation: txn_isolation }  (Default: 'best-effort') Transaction isolation level
-function box.begin(txn_isolation) end
+---@param opts? begin_options
+function box.begin(opts) end
 
 --- End the transaction, and make all its data-change operations permanent.
 ---
@@ -124,95 +128,6 @@ box.index = {
 ---@vararg any ... arguments to the function
 function box.once(key, fnc, ...) end
 
----When called without arguments, box.error() re-throws whatever the last error was.
----@return BoxErrorObject
-function box.error() end
-
----Throw an error. When called with a Lua-table argument, the code and reason have any user-desired values. The result will be those values.
----@param err { reason: string, code: number? } reason is description of an error, defined by user; code is numeric code for this error, defined by user
----@return BoxErrorObject
-function box.error(err) end
-
----Throw an error. This method emulates a request error, with text based on one of the pre-defined Tarantool errors defined in the file errcode.h in the source tree.
----@param code number number of a pre-defined error
----@param errtext string part of the message which will accompany the error
----@param ... string part of the message which will accompany the error
-function box.error(code, errtext, ...) end
-
----@class BoxErrorObject: ffi.cdata*
----@field type string (usually ClientError)
----@field base_type string (usually ClientError)
----@field code number number of error
----@field prev? BoxErrorObject previous error
----@field message any message of error given during `box.error.new`
-local box_error_object = {}
-
----@class BoxErrorTrace
----@field file string Tarantool source file
----@field line number Tarantool source file line number
-
----@class BoxErrorObjectTable
----@field code number error’s number
----@field type string error’s C++ class
----@field message string error’s message
----@field prev? BoxErrorObject previous error
----@field base_type string usually ClientError or CustomError
----@field custom_type string? present if custom ErrorType was passed
----@field trace BoxErrorTrace[]? backtrace
-
----@return BoxErrorObjectTable
-function box_error_object:unpack() end
-
----Raises error
-function box_error_object:raise() end
-
----Instances new BoxError
----@param code number number of a pre-defined error
----@param errtxt string part of the message which will accompany the error
----@return BoxErrorObject
-function box.error.new(code, errtxt, ...) end
-
----Instances new BoxError
----@param err { reason: string, code: number?, type: string? } custom error
----@return BoxErrorObject
-function box.error.new(err) end
-
----@return BoxErrorObject
-function box.error.last() end
-
----@class BoxStatDefault
----@field total number
----@field rps number
-
----@class BoxStatDefaultWithCurrent:BoxStatDefault
----@field current number
-
----@class BoxStatNet
----@field SENT BoxStatDefault sent bytes to iproto
----@field RECEIVED BoxStatDefault received bytes from iproto
----@field CONNECTIONS BoxStatDefaultWithCurrent iproto connections statistics
----@field REQUESTS BoxStatDefaultWithCurrent iproto requests statistics
-
----@class BoxStat
----@field reset fun() # resets current statistics
----@field net fun(): BoxStatNet
----@overload fun(): BoxStatInfo
-
----@class BoxStatInfo
----@field INSERT BoxStatDefault
----@field DELETE BoxStatDefault
----@field SELECT BoxStatDefault
----@field REPLACE BoxStatDefault
----@field UPDATE BoxStatDefault
----@field UPSERT BoxStatDefault
----@field CALL BoxStatDefault
----@field EVAL BoxStatDefault
----@field AUTH BoxStatDefault
----@field ERROR BoxStatDefault
-
----@type BoxStat
-box.stat = {}
-
 ---@async
 ---Creates new snapshot of the data and executes checkpoint.gc process
 function box.snapshot() end
@@ -229,11 +144,20 @@ function watcher:unregister() end
 ---@param value any
 function box.broadcast(key, value) end
 
----@since 2.10.0
+---2.10.0
 ---Subscribe to events broadcast by a local host.
 ---@param key string
 ---@param func fun(key: string, value: any)
 ---@return box.watcher
 function box.watch(key, func) end
+
+---@since 2.10.0
+---Subscribe to events broadcast by a local host.
+---
+---Automatically unsubscribe when event is delivered
+---@param key string
+---@param func fun(key: string, value: any)
+---@return box.watcher
+function box.watch_once(key, func) end
 
 return box

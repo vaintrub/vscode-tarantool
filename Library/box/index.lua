@@ -17,7 +17,7 @@ local boxIndex = {}
 
 ---@class boxIndexOptions: table
 ---@field name? string name of the index
----@field type? "TREE" | "HASH" | "BITSET" | "RTREE" (Default: TREE) type of index
+---@field type? "TREE" | "HASH" | "BITSET" | "RTREE" | "tree" | "hash" | "bitset" | "rtree" (Default: TREE) type of index
 ---@field id? number (Default: last index’s id + 1) unique identifier
 ---@field unique? boolean (Default: true) index is unique
 ---@field if_not_exists? boolean (Default: false) no error if duplicate name
@@ -47,7 +47,7 @@ function boxIndex:select(key, options) end
 ---Search for a tuple or a set of tuples in the given space, and allow iterating over one tuple at a time.
 ---@param key box.tuple|tuple_type[]|scalar value to be matched against the index key, which may be multi-part
 ---@param iterator? boxIterator (Default: 'EQ') defines iterator order
----@return Iterator
+---@return fun.iterator
 function boxIndex:pairs(key, iterator) end
 
 ---Update a tuple.
