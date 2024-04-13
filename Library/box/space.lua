@@ -105,7 +105,7 @@ function boxSpaceObject:before_replace(trigger_func, old_trigger_func) end
 ---@return boxSpaceIterator,boxSpaceIteratorParam,boxSpaceIteratorState
 function boxSpaceObject:pairs(key, iterator) end
 
----@class boxSpaceIterator<T,E>: Iterator<T,E>
+---@class boxSpaceIterator: fun.iterator
 ---@class boxSpaceIteratorParam: string
 ---@class boxSpaceIteratorState: ffi.cdata*
 
