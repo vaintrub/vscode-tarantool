@@ -32,7 +32,6 @@ function log.debug(s, ...) end
 
 ---sets log level
 ---@param lvl? number
----@return number?
 function log.level(lvl) end
 
 ---Since 2.11.0
