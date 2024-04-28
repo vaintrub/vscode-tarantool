@@ -19,6 +19,11 @@ local i = {}
 ---@return fun.iterator, P, S
 function fun.wrap(gen, param, state) end
 
+---Unwraps iterator to gen, param, state
+---@generic P,S
+---@return any gen, P param, S state
+function i:unwrap() end
+
 ---@generic P,S
 ---@alias G<T> fun(param:T,state):_,any
 
