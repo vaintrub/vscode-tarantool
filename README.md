@@ -28,30 +28,30 @@ For local development you need:
 - [ ] Add box module annotations
   - [X] box functions (not all)
   - [ ] backup
-  - [ ] ctl
-  - [ ] error
+  - [X] ctl
+  - [X] error
   - [X] space
   - [ ] index
   - [X] cfg
   - [ ] schema
-  - [ ] stat
-  - [ ] slab
-  - [ ] tuple
-- [X] net.bot (not all)
+  - [X] stat
+  - [X] slab
+  - [X] tuple
+- [X] net.box
 - [ ] http server, client
   - [X] annotations (not all)
   - [ ] doc
 - [ ] Datetime
   - [X] Add annotations
   - [ ] Add doc
-- [ ] json, yaml
-- [X] digest (not all)
+- [X] json, yaml
+- [X] digest
 - [X] fiber
-- [X] fio (not all)
+- [X] fio
 - [X] buffer
-- [X] fun (not all)
+- [X] fun
 - [X] decimal
-- [ ] socket
+- [X] socket
 - [ ] csv
 - [ ] Add vshard annotations
 - [ ] Add cartridge annotations
