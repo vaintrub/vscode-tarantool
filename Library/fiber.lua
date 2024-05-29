@@ -40,7 +40,7 @@ function fiber.new(func, ...) end
 function fiber.self() end
 
 ---Get a fiber object by ID
----@param id number numeric identifier of the fiber.
+---@param id integer numeric identifier of the fiber.
 ---@return Fiber
 function fiber.find(id) end
 
@@ -73,7 +73,7 @@ function fiber.status(fiber_object) end
 ---@return table<number, FiberInfo>
 function fiber.info(opts) end
 
----@return number fiber_id returns current fiber id
+---@return integer fiber_id returns current fiber id
 function fiber.id() end
 
 ---@class FiberTop
@@ -149,7 +149,7 @@ function fiber.extend_slice(slice) end
 local fiber_object = {}
 
 ---Get a fiber’s ID
----@return number # fiber id
+---@return integer # fiber id
 function fiber_object:id() end
 
 ---Get a fiber’s name
@@ -202,7 +202,7 @@ function fiber_object:join() end
 local channel_object = {}
 
 ---Create a communication channel
----@param capacity? number the maximum number of slots (spaces for channel:put messages) that can be in use at once. The default is 0.
+---@param capacity? integer the maximum number of slots (spaces for channel:put messages) that can be in use at once. The default is 0.
 ---@return fiber.channel
 function fiber.channel(capacity) end
 
@@ -227,11 +227,11 @@ function channel_object:get(timeout) end
 function channel_object:is_empty() end
 
 ---Count messages in a channel
----@return number
+---@return integer
 function channel_object:count() end
 
 ---Returns size of channel
----@return number
+---@return integer
 function channel_object:size() end
 
 ---Check if a channel is full
