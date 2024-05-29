@@ -37,12 +37,23 @@ function tonumber64(value) end
 ---@return table
 function table.new(narr, nrec) end
 
+---Compare two lua tables
+---Supports __eq metamethod for comparing custom tables with metatables
+---@param a table
+---@param b table
+---@return boolean
+function table.equals(a, b) end
+
+---Deepcopy lua table (all levels)
+---Supports __copy metamethod for copying custom tables with metatables
 ---@param t table
----@return table
+---@return table deepcopy
 function table.deepcopy(t) end
 
+---Copy any table (only top level)
+---Supports __copy metamethod for copying custom tables with metatables
 ---@param t table
----@return table
+---@return table copy
 function table.copy(t) end
 
 ---Removes all keys from table
@@ -76,11 +87,12 @@ function dostring(lua_chunk_string, ...) end
 ---@operator mod(int64_t|number|uint64_t): uint64_t
 ---@operator pow(int64_t|number|uint64_t): uint64_t
 
-
 ---Returns path of the library
 ---@param name string
----@return string
+---@return string?
 function package.search(name) end
+
+function package.searchroot() end
 
 ---sets root for require
 ---@param path ?string
