@@ -8,6 +8,7 @@
 ---output capturing,
 ---helpers for testing tarantool applications,
 ---luacov integration.
+--luacheck: ignore
 
 ---@class luatest
 local luatest = {}
@@ -29,15 +30,18 @@ function luatest.group(name, params) end
 --#region assert
 
 ---Check that value is truthy.
----@param value any
+---@generic T
+---@param value? T`
 ---@param message? string
-function luatest.assert(value, message) end
+---@param ... any
+---@return T
+---@return any ...
+function luatest.assert(value, message, ...) end
 
 ---Check that value is falsy.
 ---@param value any
 ---@param message? string
 function luatest.assert_not(value, message) end
-
 
 ---Check that two floats are close by margin.
 ---@param actual number
@@ -60,34 +64,33 @@ function luatest.assert_covers(actual, expected, message) end
 function luatest.assert_equals(actual, expected, message, deep_analysis) end
 
 ---Check that calling fn raises an error.
----@param func fun()
+---@param func fun(...)
 ---@param ... any?
 function luatest.assert_error(func, ...) end
 
----comment
+---Check that calling fn raises an error that contains `expected_partial`
 ---@param expected_partial string
----@param func fun()
+---@param func fun(...)
 ---@param ... any
 function luatest.assert_error_msg_contains(expected_partial, func, ...) end
 
 ---Strips location info from message text.
 ---@param expected string
----@param func fun()
+---@param func fun(...)
 ---@param ... any
 function luatest.assert_error_msg_content_equals(expected, func, ...) end
 
 ---Checks full error: location and text.
 ---@param expected string
----@param func fun()
+---@param func fun(...)
 ---@param ... any
 function luatest.assert_error_msg_equals(expected, func, ...) end
 
----comment
----@param pattern any
----@param func fun()
+---Check that calling fn raises an error that match `pattern`
+---@param pattern string
+---@param func fun(...)
 ---@param ... any
 function luatest.assert_error_msg_matches(pattern, func, ...) end
-
 
 luatest.assert_eval_to_false = luatest.assert_not
 luatest.assert_eval_to_true = luatest.assert
@@ -155,6 +158,7 @@ function luatest.assert_items_include(actual, expected, message) end
 ---@param expected number
 ---@param margin number
 ---@param message? string
+---@return boolean
 function luatest.assert_not_almost_equals(actual, expected, margin, message) end
 
 ---Checks that map does not contain the other one.
@@ -268,51 +272,76 @@ function luatest.helpers.matrix(vectors) end
 ---
 ---Default options are taken from helpers.RETRYING_TIMEOUT and helpers.RETRYING_DELAY
 ---@param config {timeout: number, delay: number}
----@param func fun()
+---@param func fun(...)
 ---@param ... any
 function luatest.helpers.retrying(config, func, ...) end
 
 function luatest.helpers.uuid(a, ...) end
 
-
----@class luatest.group
+---@diagnostic disable: redundant-parameter
+---@class luatest.group: { [string]: fun(cg?: table) } test_*
 ---Tests group.
 ---To add new example add function at key starting with test .
 ---Group hooks run always when test group is changed. So it may run multiple times when --shuffle option is used.
 local group = {}
 
 ---Add callback to run once after all tests in the group.
----@param func fun()
+---@param func fun(cg?: table)
 function group.after_all(func) end
 
+---Add callback to run once after all tests in the group when `param` met
+---@param param table
+---@param func fun(cg?: table)
+function group.after_all(param, func) end
+
 ---Add callback to run after each test in the group.
----@param func fun()
+---@param func fun(cg?: table)
 function group.after_each(func) end
 
----Add callback to run once after all tests in the group.
----@param func fun()
+---Add callback to run after each test in the group when `param` met.
+---@param param table
+---@param func fun(cg?: table)
+function group.after_each(param, func) end
+
+---Add callback to run once before all tests in the group.
+---@param func fun(cg?: table)
 function group.before_all(func) end
 
+---Add callback to run once before all tests in the group when `param` met.
+---@param param table
+---@param func fun(cg?: table)
+function group.before_all(param, func) end
+
 ---Add callback to run before each test in the group.
----@param func fun(cg: table)
+---@param func fun(cg?: table)
 function group.before_each(func) end
 
----called only before the test when `param` met
+---Add callback to run before each test in the group when `param` met.
 ---@param param table
----@param func fun(cg: table)
+---@param func fun(cg?: table)
 function group.before_each(param, func) end
 
----called before test named `test_name` when all params met
+---Add callback to run before named `test_name` test.
 ---@param test_name string
----@param func fun(cg: table)
----@param param table?
-function group.before_test(test_name, func, param) end
+---@param func fun(cg?: table)
+function group.before_test(test_name, func) end
 
----called after test named `test_name` when all params met
+---Add callback to run before named `test_name` test when `param` met.
 ---@param test_name string
----@param func fun(cg: table)
----@param param table?
-function group.after_test(test_name, func, param) end
+---@param param table
+---@param func fun(cg?: table)
+function group.before_test(test_name, param, func) end
+
+---Add callback to run after named `test_name` test.
+---@param test_name string
+---@param func fun(cg?: table)
+function group.after_test(test_name, func) end
+
+---Add callback to run after named `test_name` test when `param` met.
+---@param test_name string
+---@param param table
+---@param func fun(cg?: table)
+function group.after_test(test_name, param, func) end
 
 ---@class luatest.server
 ---Class to manage Tarantool instances.
@@ -395,7 +424,6 @@ function server:get_synchro_queue_term() end
 ---Get the server’s own vclock, including the local component.
 ---@return table<number,uint64_t>
 function server:get_vclock() end
-
 
 ---Search a string pattern in the server’s log file. If the server has crashed, opts.filename is required.
 ---@param pattern string String pattern to search in the server’s log file.
