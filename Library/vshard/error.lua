@@ -81,7 +81,6 @@ local error = {}
 ---| StorageCfgIsInProgress
 ---| RouterCfgIsInProgress
 
-
 --- It is created on sharding errors like
 --- replicaset unavailability, master absence etc. It has type =
 --- 'ShardingError'.
@@ -329,8 +328,8 @@ error.code = {
 }
 
 --- Unpacking and and adding serialization meta table to json
----@param err BoxError
----@return BoxError
+---@param err BoxErrorObject
+---@return BoxErrorObject
 function error.box(err) end
 
 -- Construct an vshard error.
@@ -341,9 +340,8 @@ function error.vshard(code, ...) end
 
 -- Convert error object from pcall to lua, box or vshard error object.
 ---@param err any
----@return VshardError|BoxError
+---@return VshardError|BoxErrorObject
 function error.make(err) end
-
 
 --- Restore an error object from its string serialization.
 ---@param err_str string
@@ -357,7 +355,7 @@ function error.from_string(err_str) end
 function error.alert(code, ...) end
 
 --- Create a timeout error object
----@return BoxError
+---@return BoxErrorObject
 function error.timeout() end
 
 return error

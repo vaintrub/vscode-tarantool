@@ -20,33 +20,37 @@
 ---@field public uuid string replicaset_uuid of the replicaset this instance belong
 
 ---@class BoxInfoSynchroQueue
----@field public owner number ID of the replica that owns the synchronous transaction queue.
----@field public term number current queue term. It contains the term of the last PROMOTE request.
----@field public len number the number of entries that are currently waiting in the queue.
----@field public busy boolean the boolean value is true when the instance is processing or writing some system request that modifies the queue (for example, PROMOTE, CONFIRM, or ROLLBACK).
+---@field public owner integer ID of the replica that owns the synchronous transaction queue.
+---@field public term integer current queue term.
+---@field public len integer the number of entries that are currently waiting in the queue.
+---@field public busy boolean the instance is processing or writing some system request that modifies the queue
 
 ---@class BoxInfoSynchro
----@field public quorum number  the resulting value of the replication_synchro_quorum configuration option.
 ---@field public queue BoxInfoSynchroQueue
+---@field public quorum integer the resulting value of the replication_synchro_quorum configuration option.
 
 ---@class BoxInfo: table
 ---The box.info submodule provides access to information about server instance variables.
 ---@field public id integer is a short numeric identifier of instance n within the replica set. This value is stored in the box.space._cluster system space.
 ---@field public uuid string is a globally unique identifier of instance n.
 ---@field public pid integer is the process ID.
+---@field public listen string real address to which an instance was bound.
 ---@field public uptime integer is the number of seconds since the instance started.
 ---@field public status BoxInfoStatusRunning | BoxInfoStatusLoading | BoxInfoStatusOrphan | BoxInfoStatusHotStandBy is the current state of the instance.
 ---@field public lsn integer is the log sequence number (LSN) for the latest entry in instance n’s write ahead log (WAL)
 ---@field public version string is the Tarantool version
+---@field public schema_version integer database schema version.
 ---@field public ro boolean is true if the instance is in “read-only” mode
 ---@field public package string
 ---@field public vclock integer[] is a table with the vclock values of all instances in a replica set which have made data changes.
 ---@field public replication table<integer,ReplicaInfo>
+---@field public replication_anon { count: integer } list all the anonymous replicas following the instance.
 ---@field public election BoxInfoElection shows the current state of a replica set node regarding leader election
 ---@field public signature integer is the sum of all lsn values from each vector clock (vclock) for all instances in the replica set
 ---@field public cluster BoxInfoCluster
+---@field public synchro BoxInfoSynchro
 ---@field public ro_reason string
----@field public synchro table
+---@overload fun(): BoxInfo
 box.info = {}
 
 ---@class ReplicaInfo
@@ -55,6 +59,9 @@ box.info = {}
 ---@field public lsn integer is the log sequence number (LSN) for the latest entry in instance n’s write ahead log (WAL)
 ---@field public upstream UpstreamInfo|nil
 ---@field public downstream DownstreamInfo|nil
+
+---@return { [string]: ReplicaInfo }
+function box.info.replication_anon() end
 
 ---@alias UpstreamStatusAuth "auth" means that authentication is happening.
 ---@alias UpstreamStatusConnecting "connecting" means that connection is happening.
@@ -81,7 +88,6 @@ box.info = {}
 ---@field public vclock integer[] may be the same as the current instance’s vclock
 ---@field public message string|nil
 ---@field public system_message string|nil
-
 
 ---@class BoxInfoMemory
 ---@field public cache number number of bytes used for caching user data. The memtx storage engine does not require a cache, so in fact this is the number of bytes in the cache for the tuples stored for the vinyl storage engine.

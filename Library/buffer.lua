@@ -15,30 +15,31 @@ local buffer = {}
 local buffer_object = {}
 
 --- Create a new buffer
----@param size? number
+---@param size? integer
 ---@return BufferObject
 function buffer.ibuf(size) end
 
 ---Allocate size bytes for buffer_object.
----@param size number memory in bytes to allocate
+---@param size integer memory in bytes to allocate
 ---@return ffi.cdata* wpos
 function buffer_object:alloc(size) end
 
 ---Return the capacity of the buffer_object.
----@return number # wpos - buf
+---@return integer # wpos - buf
 function buffer_object:capacity() end
 
 ---Check if size bytes are available for reading in buffer_object.
----@param size number memory in bytes to check
+---@param size integer memory in bytes to check
 ---@return ffi.cdata* rpos
 function buffer_object:checksize(size) end
 
 ---Return the size of the range occupied by data.
----@return number # rpos - buf
+---@return integer # rpos - buf
 function buffer_object:pos() end
 
----Read
----@param size number Read size bytes from buffer.
+---Read `size` bytes from buffer.
+---@param size integer bytes to read
+---@return ffi.cdata* rpos
 function buffer_object:read(size) end
 
 ---Clear the memory slots allocated by buffer_object.
@@ -53,15 +54,16 @@ function buffer_object:reset() end
 ---Reserve memory for buffer_object.
 ---Check if there is enough memory to write `size` bytes after `wpos`.
 ---If not, `epos` shifts until `size` bytes will be available.
----@param size number
+---@param size integer
+---@return ffi.cdata* wpos
 function buffer_object:reserve(size) end
 
 ---Return a range, available for reading data.
----@return number # wpos - rpos
+---@return integer # wpos - rpos
 function buffer_object:size() end
 
 ---Return a range for writing data.
----@return number # epos - wpos
+---@return integer # epos - wpos
 function buffer_object:unused() end
 
 return buffer

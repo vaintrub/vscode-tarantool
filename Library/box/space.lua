@@ -20,6 +20,7 @@ local boxSpaceObject = {}
 ---It is mandatory to create an index for a space before trying to insert tuples into it, or select tuples from it. The first created index will be used as the primary-key index, so it must be unique.
 ---@param index_name string name of index, which should conform to the rules for object names
 ---@param options boxIndexOptions
+---@return boxIndex
 function boxSpaceObject:create_index(index_name, options) end
 
 ---@class SpaceAlterOptions
@@ -42,13 +43,16 @@ function boxSpaceObject:bsize() end
 ---Return the number of tuples. If compared with len(), this method works slower because count() scans the entire space to count the tuples.
 ---@param key? box.tuple|tuple_type[]|scalar
 ---@param iterator? boxIterator
----@return number number_of_tuples
+---@return integer number_of_tuples
 function boxSpaceObject:count(key, iterator) end
 
 ---@class boxSpaceFieldFormat
 ---@field name? string value may be any string, provided that two fields do not have the same name
 ---@field type? "any" | "unsigned" | "string" | "integer" | "number" | "varbinary" | "boolean" | "double" | "decimal" | "uuid" | "array" | "map" | "scalar" value may be any of allowed types
----@field is_nullable? boolean
+---@field is_nullable? boolean (Default: false value specifies whether nil can be used as a field value.
+---@field collation? string value specifies the collation used to compare field values.
+---@field constraint? string specifies the constraints that the field value must satisfy.
+---@field foreign_key? string specifies the foreign keys for the field.
 
 ---@alias boxSpaceFormat boxSpaceFieldFormat[]
 ---field names and types: See the illustrations of format clauses in the space_object:format() description and in the box.space._space example. Optional and usually not specified.
@@ -64,9 +68,12 @@ function boxSpaceObject:delete(key) end
 function boxSpaceObject:drop() end
 
 ---Declare field names and types.
----@param format_clause? boxSpaceFormat a list of field names and types
----@return nil|boxSpaceFieldFormat nothing_or_existing_format returns current format if format_clause is not given
+---@param format_clause boxSpaceFormat a list of field names and types
 function boxSpaceObject:format(format_clause) end
+
+---Returns current format
+---@return boxSpaceFormat format
+function boxSpaceObject:format() end
 
 ---Search for a tuple in the given space.
 ---@param key box.tuple|tuple_type[]|scalar
@@ -127,15 +134,16 @@ function boxSpaceObject:put(tuple) end
 ---@param flag boolean
 function boxSpaceObject:run_triggers(flag) end
 
----@class boxSpaceSelectOptions: table
----@field iterator? boxIterator type of the iterator
+---@class boxSpaceSelectOptions: boxTableIterator
 ---@field limit? number maximum number of tuples
 ---@field offset? number number of tuples to skip
+---@field fetch_pos? boolean if `true`, the select method returns the position of the last selected tuple as the second value.
 
 ---Search for a tuple or a set of tuples in the given space. This method doesn’t yield (for details see Cooperative multitasking).
 ---@param key box.tuple|tuple_type[]|scalar
 ---@param options? boxSpaceSelectOptions
 ---@return box.tuple[] list the tuples whose primary-key fields are equal to the fields of the passed key. If the number of passed fields is less than the number of fields in the primary key, then only the passed fields are compared, so select{1,2} will match a tuple whose primary key is {1,2,3}.
+---@return string? pos
 function boxSpaceObject:select(key, options) end
 
 ---Deletes all tuples. The method is performed in background and doesn’t block consequent requests.
@@ -160,7 +168,7 @@ function boxSpaceObject:truncate() end
 ---When multiple operations are present, the field number for each operation is assumed to be relative to the most recent state of the tuple, that is, as if all previous operations in a multi-operation update have already been applied.
 ---In other words, it is always safe to merge multiple update invocations into a single invocation, with no change in semantics.
 ---@param key box.tuple|tuple_type[]|scalar
----@param update_operations { [1]: update_operation, [2]: number|string, [3]: tuple_type }[]
+---@param update_operations { [1]: update_operation, [2]: integer|string, [3]: tuple_type }[]
 ---@return box.tuple? tuple the updated tuple if it was found
 function boxSpaceObject:update(key, update_operations) end
 
@@ -169,7 +177,7 @@ function boxSpaceObject:update(key, update_operations) end
 ---If there is no existing tuple which matches the key fields of tuple, then the request has the same effect as space_object:insert() and the {tuple} parameter is used.
 ---However, unlike insert or update, upsert will not read a tuple and perform error checks before returning – this is a design feature which enhances throughput but requires more caution on the part of the user.
 ---@param tuple box.tuple|tuple_type[]
----@param update_operations { [1]: update_operation, [2]: number|string, [3]: tuple_type }[]
+---@param update_operations { [1]: update_operation, [2]: integer|string, [3]: tuple_type }[]
 function boxSpaceObject:upsert(tuple, update_operations) end
 
 ---Converts table to tuple if it is satisfied by format

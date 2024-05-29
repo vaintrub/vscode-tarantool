@@ -28,7 +28,15 @@ function box.ctl.wait_rw(timeout) end
 ---@param timeout? number
 function box.ctl.wait_ro(timeout) end
 
-function box.ctl.on_shutdown() end
+---Define a trigger for execution before shutdown
+---@param trigger_func? fun() function which will become the trigger function
+---@param old_trigger_func? fun() existing trigger function which will be replaced by trigger-function
+---@return fun()? removed_trigger If the parameters are (nil, old-trigger-function), then the old trigger is deleted.
+function box.ctl.on_shutdown(trigger_func, old_trigger_func) end
+
+---Set a timeout for the on_shutdown trigger.
+---@param timeout? number
+function box.ctl.set_on_shutdown_timeout(timeout) end
 
 ---Since: 3.0.0.
 ---Make the instance a bootstrap leader of a replica set.
@@ -36,7 +44,7 @@ function box.ctl.make_bootstrap_leader() end
 
 ---Since version 2.5.3.
 ---Check whether the recovery process has finished.
----Until it has finished, space changes such as insert or update are not possible.
+---Until it has finished, space changes such as `insert` or `update` are not possible.
 ---@return boolean is_recovery_finished
 function box.ctl.is_recovery_finished() end
 
@@ -64,3 +72,11 @@ function box.ctl.on_recovery_state(trigger) end
 ---The current state is available in the box.info.election table.
 ---@param trigger function
 function box.ctl.on_election(trigger) end
+
+---Create a “schema_init trigger”. The trigger-function will be executed when `box.cfg{}` happens for the first time.
+---That is, the `schema_init` trigger is called before the server’s configuration and recovery begins,
+---and therefore `box.ctl.on_schema_init` must be called before `box.cfg` is called.
+---@param trigger_func? fun() function which will become the trigger function
+---@param old_trigger_func? fun() existing trigger function which will be replaced by trigger-function
+---@return fun()? removed_trigger If the parameters are (nil, old-trigger-function), then the old trigger is deleted.
+function box.ctl.on_schema_init(trigger_func, old_trigger_func) end
