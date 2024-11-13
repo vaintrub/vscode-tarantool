@@ -35,7 +35,7 @@ function decimal.ln(n) end
 function decimal.new(n) end
 
 ---@param n decimal|string|number
----@return number
+---@return integer
 function decimal.precision(n) end
 
 ---@param n decimal

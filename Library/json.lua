@@ -7,8 +7,18 @@
 
 local json = {}
 
+function json.new()
+  return json
+end
+
+---@type metatable
+json.array_mt = {}
+
+---@type metatable
+json.map_mt = {}
+
 ---@class jsonCfg
----@field encode_max_depth? number (default: 128) Max recursion depth for encoding
+---@field encode_max_depth? integer (default: 128) Max recursion depth for encoding
 ---@field encode_deep_as_nil? boolean (default: false) A flag saying whether to crop tables with nesting level deeper than cfg.encode_max_depth. Not-encoded fields are replaced with one null. If not set, too deep nesting is considered an error.
 ---@field encode_invalid_numbers? boolean (deafult: true) A flag saying whether to enable encoding of NaN and Inf numbers
 ---@field encode_number_precision? number (default: 14) Precision of floating point numbers
@@ -20,11 +30,10 @@ local json = {}
 ---@field encode_sparse_safe? number (default: 10) A limit ensuring that small Lua arrays are always encoded as sparse arrays (instead of generating an error or encoding as a map)
 ---@field decode_invalid_numbers? boolean (default: true) A flag saying whether to enable decoding of NaN and Inf numbers
 ---@field decode_save_metatables? boolean (default: true) A flag saying whether to set metatables for all arrays and maps
----@field decode_max_depth? number (default: 128) Max recursion depth for decoding
-
+---@field decode_max_depth? integer (default: 128) Max recursion depth for decoding
 ---Set values that affect the behavior of `json.encode` and `json.decode`
----@param cfg jsonCfg
-function json.cfg(cfg) end
+---@overload fun(cfg: jsonCfg)
+json.cfg = {}
 
 ---Convert a Lua object to a JSON string
 ---@param value any either a scalar value or a Lua table value.

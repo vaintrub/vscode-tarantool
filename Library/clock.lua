@@ -20,7 +20,7 @@ function clock.time64() end
 
 --- Get the wall clock time in nanoseconds
 ---@return uint64_t
-function clock.realtime64()	end
+function clock.realtime64() end
 
 --- Get the monotonic time in seconds
 ---@return number
@@ -48,8 +48,7 @@ function clock.thread64() end
 
 --- Measure the time a function takes within a processor
 ---@param func fun(...: any): ...:any
----@vararg any
 ---@return table
-function clock.bench(func, args) end
+function clock.bench(func, ...) end
 
 return clock

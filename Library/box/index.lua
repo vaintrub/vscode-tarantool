@@ -1,19 +1,35 @@
 ---@meta
 --luacheck: ignore
 
+---@alias boxIndexPartType
+---| "datetime"
+---| "number"
+---| "double"
+---| "boolean"
+---| "decimal"
+---| "scalar"
+---| "uuid"
+---| "integer"
+---| "unsigned"
+---| "string"
+---| "varbinary"
+---| "array"
+
 ---@class boxIndex: boxIndexOptions
 ---@field parts boxIndexPart[] list of index parts
 local boxIndex = {}
 
 ---@class boxIndexPart
----@field type string type of the field
+---@field type boxIndexPartType type of the field
 ---@field is_nullable boolean false if field not-nullable, otherwise true
----@field fieldno number position in tuple of the field
+---@field exclude_null? boolean
+---@field fieldno integer position in tuple of the field
+---@field path? string
 
 ---@alias IndexPart
----| { field: number, type: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string, fieldno: number }
----| { field: string, is_nullable: boolean, collation: string, path: string, fieldno: number }
----| { [1]: number|string, [2]: 'unsigned'|'string'|'boolean'|'number'|'integer'|'decimal'|'varbinary'|'uuid'|'scalar'|'array', is_nullable: boolean, collation: string, path: string, fieldno: number }
+---| { field: integer, type: boxIndexPartType, is_nullable: boolean, exclude_null: boolean, collation: string, path: string, fieldno: integer }
+---| { field: string, is_nullable: boolean, exclude_null: boolean, collation: string, path: string, fieldno: integer }
+---| { [1]: integer|string, [2]: boxIndexPartType, is_nullable: boolean, exclude_null: boolean, collation: string, path: string, fieldno: integer }
 
 ---@class boxIndexOptions: table
 ---@field name? string name of the index
@@ -42,6 +58,7 @@ function boxIndex:get(key) end
 ---@param key box.tuple|tuple_type[]|scalar
 ---@param options? boxSpaceSelectOptions
 ---@return box.tuple[] list the tuples whose primary-key fields are equal to the fields of the passed key. If the number of passed fields is less than the number of fields in the primary key, then only the passed fields are compared, so select{1,2} will match a tuple whose primary key is {1,2,3}.
+---@return string? pos
 function boxIndex:select(key, options) end
 
 ---Search for a tuple or a set of tuples in the given space, and allow iterating over one tuple at a time.
@@ -75,9 +92,12 @@ function boxIndex:min(key) end
 ---Return the number of tuples. If compared with len(), this method works slower because count() scans the entire space to count the tuples.
 ---@param key? box.tuple|tuple_type[]|scalar
 ---@param iterator? boxIterator
----@return number number_of_tuples
+---@return integer number_of_tuples
 function boxIndex:count(key, iterator) end
 
+---Return the number of tuples in the space. If compared with count(), this method works faster because len() does not scan the entire space to count the tuples.
+---@return integer number_of_tuples
+function boxIndex:len() end
 
 ---Returns total bsize of tuples in index
 ---@return integer
@@ -95,6 +115,13 @@ function boxIndex:delete(key) end
 ---where a part’s is_nullable flag is changed from false to true.
 ---@param opts boxIndexOptions
 function boxIndex:alter(opts) end
+
+---Rename an index.
+---@param index_name string new name for index
+function boxIndex:rename(index_name) end
+
+---Drop an index. Dropping a primary-key index has a side effect: all tuples are deleted.
+function boxIndex:drop() end
 
 ---Return a tuple’s position for an index.
 ---

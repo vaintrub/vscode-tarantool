@@ -7,6 +7,13 @@
 ---| 'voter'
 
 ---@alias log_level
+---| 'crit'
+---| 'info'
+---| 'debug'
+---| 'syserror'
+---| 'verbose'
+---| 'fatal'
+---| 'error'
 ---| 1 # SYSERROR
 ---| 2 # ERROR
 ---| 3 # CRITICAL
@@ -56,6 +63,7 @@
 ---@field memtx_dir? string (Default: '.') path to dir with memtx snapshots
 ---@field memtx_max_tuple_size? number (Default: 1024 * 1024) Size of the largest allocation unit, for the memtx storage engine. It can be increased if it is necessary to store large tuples
 ---@field memtx_memory? number (Default: 256 * 1024 *1024) How much memory Tarantool allocates to actually store tuples
+---@field memtx_allocator? 'small'|'system' (Default: 'small')
 ---@field memtx_min_tuple_size? number (Default: 16) Size of the smallest allocation unit. It can be decreased if most of the tuples are very small
 ---@field memtx_use_mvcc_engine? boolean (Default: false) Since version 2.6.1. Enables transactional manager if set to true.
 ---@field net_msg_max? number (Default: 768) To handle messages, Tarantool allocates fibers. To prevent fiber overhead from affecting the whole system, Tarantool restricts how many messages the fibers handle, so that some pending requests are blocked
@@ -68,6 +76,8 @@
 ---@field replication_connect_quorum? number (Default: _cluster:len()) required number of connected replicas to start bootstrap
 ---@field replication_connect_timeout? number (Default: 30) timeout in seconds to expect replicas in replication to fail bootstrap
 ---@field replication_synchro_quorum? string|number (Default: N / 2 + 1. Before version 2.10.0, the default value was 1) number or formula of synchro quorum
+---@field replication_synchro_timeout? number (Default: 5) For synchronous replication only. Tells how many seconds to wait for a synchronous transaction quorum replication until it is declared failed and is rolled back.
+---@field replication_threads? number (Default: 1) The number of threads spawned to decode the incoming replication data.
 ---@field replication_skip_conflict? boolean (Default: false) By default, if a replica adds a unique key that another replica has added, replication stops with error = ER_TUPLE_FOUND
 ---@field replication_sync_lag? number (Default: 10) The maximum lag allowed for a replica
 ---@field replication_sync_timeout? number (Default: 300) The number of seconds that a replica will wait when trying to sync with a master in a cluster, or a quorum of masters, after connecting or during configuration update
@@ -95,6 +105,7 @@
 ---@field wal_dir? string (Default: '.') path to dir with xlogs
 ---@field wal_dir_rescan_delay? number (Default: 2) Number of seconds between periodic scans of the write-ahead-log file directory, when checking for changes to write-ahead-log files for the sake of replication or hot standby
 ---@field wal_max_size? number (Default: 256 * 1024 * 1024) The maximum number of bytes in a single write-ahead log file. When a request would cause an .xlog file to become larger than wal_max_size, Tarantool creates another WAL file
+---@field wal_queue_max_size? number (Default: 16 * 1024 * 1024) The size of the queue (in bytes) used by a replica to submit new transactions to a write-ahead log
 ---@field wal_mode? wal_mode (Default: 'write') Specify fiber-WAL-disk synchronization mode as
 ---@field worker_pool_threads? number (Default: 4) he maximum number of threads to use during execution of certain internal processes (currently socket.getaddrinfo() and coio_call())
 ---@field work_dir? string (Default: nil) path to work dir of tarantool

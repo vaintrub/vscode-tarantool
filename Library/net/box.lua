@@ -2,6 +2,7 @@
 
 -- luacheck:ignore
 ---@class net.box
+---@field self NetBoxConnection
 local m = {}
 
 ---@class NetBoxConnectOptions
@@ -55,14 +56,14 @@ function fut:discard() end
 ---@param func string
 ---@param args? any[]
 ---@param opts? NetBoxCallOptions
----@return table
+---@return ...
 function conn:call(func, args, opts) end
 
 ---@async
 ---@param expression string
 ---@param args any[]?
 ---@param opts NetBoxCallOptions?
----@return table
+---@return ...
 function conn:eval(expression, args, opts) end
 
 
@@ -80,7 +81,7 @@ function conn:on_disconnect(new_callback, old_callback) end
 
 ---Wait for connection to be active or closed.
 ---@async
----@param wait_timeout number
+---@param wait_timeout number?
 ---@return boolean is_connected true when connected, false on failure.
 function conn:wait_connected(wait_timeout) end
 
@@ -108,7 +109,7 @@ function m.connect(endpoint, options) end
 ---Creates connection to Tarantool
 ---@async
 ---@param endpoint string
----@param options NetBoxConnectOptions
+---@param options NetBoxConnectOptions?
 ---@return NetBoxConnection
 function m.new(endpoint, options) end
 
