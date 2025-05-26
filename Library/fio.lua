@@ -1,6 +1,7 @@
 ---@meta
 --luacheck: ignore
 
+---@class fio
 local fio = {}
 
 ---Concatenate partial string, separated by ‘/’ to form a path name.
@@ -37,6 +38,8 @@ function fio.dirname(path_name) end
 ---@param file_name string
 ---@return string directory_name that is, path name including file name.
 function fio.abspath(file_name) end
+
+fio.path = {}
 
 ---Check if file or directory exists
 ---

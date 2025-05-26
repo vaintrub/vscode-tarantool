@@ -152,11 +152,17 @@ local fiber_object = {}
 ---@return integer # fiber id
 function fiber_object:id() end
 
----Get a fiber’s name
+---Gets or changes a fiber’s name
 ---@param name? string
 ---@param options? {truncate: boolean}
 ---@return string name
 function fiber_object:name(name, options) end
+
+---Gets or changes a fiber’s name
+---@param name? string
+---@param options? {truncate: boolean}
+---@return string name
+function fiber.name(name, options) end
 
 ---Get a fiber’s status
 ---@return "dead"|"running"|"suspended"

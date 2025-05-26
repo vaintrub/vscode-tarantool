@@ -27,7 +27,7 @@
 ---| array # Tarantool array
 
 ---Convert a string or a Lua number to a 64-bit integer.
----@param value string|number
+---@param value string|number|ffi.cdata*
 ---@return ffi.cdata*|number
 function tonumber64(value) end
 

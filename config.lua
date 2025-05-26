@@ -1,7 +1,3 @@
-name    = 'tarantool'
-
-words   = {'box%.%w+'}
-
 configs = {
     {
         key    = 'Lua.runtime.version',

@@ -68,7 +68,8 @@ function boxSpaceObject:delete(key) end
 function boxSpaceObject:drop() end
 
 ---Declare field names and types.
----@param format_clause boxSpaceFormat a list of field names and types
+---@param format_clause? boxSpaceFormat a list of field names and types
+---@return nil|boxSpaceFormat nothing_or_existing_format returns current format if format_clause is not given
 function boxSpaceObject:format(format_clause) end
 
 ---Returns current format

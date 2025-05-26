@@ -343,16 +343,18 @@ function group.after_test(test_name, func) end
 ---@param func fun(cg?: table)
 function group.after_test(test_name, param, func) end
 
----@class luatest.server
 ---Class to manage Tarantool instances.
+---@class luatest.server
+---@field alias string
 local server = {}
 
 luatest.Server = server
 
 ---Build a listen URI based on the given server alias. For now, only UNIX sockets are supported.
 ---@param server_alias string
+---@param extra_alias? string
 ---@return string
-function server.build_listen_uri(server_alias) end
+function server.build_listen_uri(server_alias, extra_alias) end
 
 ---Assert that the server follows the source node with the given ID.
 ---Meaning that it replicates from the remote node normally, and has already joined and subscribed.

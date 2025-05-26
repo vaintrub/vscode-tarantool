@@ -12,7 +12,7 @@ local http_client = {}
 ---@field max_connections? number is the maximum number of entries in the cache. It affects libcurl CURLMOPT_MAXCONNECTS. The default is -1.
 ---@field max_total_connections? number is the maximum number of active connections. It affects libcurl CURLMOPT_MAX_TOTAL_CONNECTIONS. It is ignored if the curl version is less than 7.30. The default is 0, which allows libcurl to scale accordingly to easily handles count.
 
----@param options ClientHTTPOptions
+---@param options? ClientHTTPOptions
 ---@return ClientHTTP
 function http.new(options) end
 

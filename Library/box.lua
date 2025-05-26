@@ -103,7 +103,7 @@ function box.on_commit(trigger_func, old_trigger_func) end
 ---@alias boxIterator boxTableIterator
 
 ---@class boxTableIterator
----@field iterator "GE"|"GT"|"LT"|"LE"|"EQ"|"REQ"|"BITS_ALL_NOT_SET"|"BITS_ALL_SET"|"BITS_ANY_SET"|"OVERLAPS"|"NEIGHBOR"|"ALL"|boxIndexIterator
+---@field iterator? "GE"|"GT"|"LT"|"LE"|"EQ"|"REQ"|"BITS_ALL_NOT_SET"|"BITS_ALL_SET"|"BITS_ANY_SET"|"OVERLAPS"|"NEIGHBOR"|"ALL"|boxIndexIterator
 ---@field after string|nil? position in index (starting from Tarantool ≥ 2.11)
 
 ---@enum boxIndexIterator

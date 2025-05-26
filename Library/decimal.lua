@@ -1,6 +1,5 @@
 ---@meta
 --luacheck: ignore
---TODO:
 
 local decimal = {}
 
@@ -52,8 +51,9 @@ function decimal.scale(n, new_scale) end
 function decimal.log10(n) end
 
 ---@param n decimal|string|number
+---@param digits? number
 ---@return decimal
-function decimal.round(n) end
+function decimal.round(n, digits) end
 
 ---@param n decimal|string|number
 ---@return decimal

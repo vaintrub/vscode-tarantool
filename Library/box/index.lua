@@ -131,3 +131,8 @@ function boxIndex:drop() end
 ---@param tuple scalar|table
 ---@return string # base64-encoded string (a tuple’s position in a space)
 function boxIndex:tuple_pos(tuple) end
+
+---Drop an index.
+---
+---Dropping a primary-key index has a side effect: all tuples are deleted.
+function boxIndex:drop() end
